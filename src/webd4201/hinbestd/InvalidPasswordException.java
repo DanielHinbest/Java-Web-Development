@@ -7,7 +7,9 @@ package webd4201.hinbestd;
  * @since 1.0
  */
 public class InvalidPasswordException extends Exception{    
-    // Removes the warning from the Exception class
+    /**
+     * Removes the warning from the Exception class
+     */
     private static final long serialVersionUID = 1L;
     
     /**

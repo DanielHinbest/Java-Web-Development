@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package webd4201.hinbestd;
 
 import java.text.DecimalFormat;
@@ -11,20 +14,42 @@ import java.text.DecimalFormat;
 public class Mark {
     
     /**
-     * Constant attributes
+     * Class constant variable for the minimum GPA value
      */
-    public final float MINIMUM_GPA = 0.0f;
-    public final float MAXIMUM_GPA = 5.0f;
-    public final DecimalFormat GPA = new DecimalFormat("#.##");
+    public static final float MINIMUM_GPA = 0.0f;
+    /**
+     * Class constant variable for the maximum GPA value
+     */
+    public static final float MAXIMUM_GPA = 5.0f;
+    /**
+     * Class constant variable for the decimal formatting for the GPA
+     */
+    public static final DecimalFormat GPA = new DecimalFormat("#.##");
     
     /**
-     * Instance variables
+     * Class instance variable for the course code
      */
     private String courseCode;
+    /**
+     * Class instance variable for the course name
+     */
     private String courseName;
+    /**
+     * Class instance variable for the GPA result
+     */
     private int result;
+    /**
+     * Class instance variable for the class's GPA weighting
+     */
     private float gpaWeighting;
 
+    /**
+     * Creates a new course mark with code, name, result, and weighting
+     * @param courseCode
+     * @param courseName
+     * @param result
+     * @param gpaWeighting 
+     */
     public Mark(String courseCode, String courseName, int result, float gpaWeighting) {
         this.setCourseCode(courseCode);
         this.setCourseName(courseName);
@@ -34,7 +59,7 @@ public class Mark {
     
     /**
      * Returns the course code
-     * @return {String}
+     * @return the course code
      */
     public String getCourseCode() {
         return courseCode;
@@ -50,7 +75,7 @@ public class Mark {
 
     /**
      * Returns the course name
-     * @return {String}
+     * @return the course name
      */
     public String getCourseName() {
         return courseName;
@@ -66,7 +91,7 @@ public class Mark {
 
     /**
      * Returns the course result
-     * @return {int}
+     * @return the result
      */
     public int getResult() {
         return result;
@@ -82,7 +107,7 @@ public class Mark {
 
     /**
      * Returns the GPA weighting
-     * @return {float}
+     * @return the GPA weight
      */
     public float getGpaWeighting() {
         return gpaWeighting;
@@ -96,6 +121,10 @@ public class Mark {
         this.gpaWeighting = gpaWeighting;
     }
     
+    /**
+     * Converts the Mark class into a string to allow for output
+     * @return the string contents
+     */
     @Override
     public String toString(){
         return String.format("%-35s", this.getCourseCode(), "%-35s", this.getCourseName(), "%-35s", this.getResult(), "%-35s", this.getGpaWeighting());        

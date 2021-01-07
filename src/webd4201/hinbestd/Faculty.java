@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package webd4201.hinbestd;
 
 import java.util.Date;
@@ -10,19 +13,38 @@ import java.util.Date;
  */
 public class Faculty extends User {
     /**
-     * Class constant variables
+     * Class constant variable for the default school code
      */
-    public final String DEFAULT_SCHOOL_CODE = "SET";
-    public final String DEFAULT_SCHOOL_DESCRIPTION = "School of Engineering & Technology";
-    public final String DEFAULT_OFFICE = "H-140";
-    public final int DEFAULT_PHONE_EXTENSION = 1234;
+    public static final String DEFAULT_SCHOOL_CODE = "SET";
+    /**
+     * Class constant variable for the default school description
+     */
+    public static final String DEFAULT_SCHOOL_DESCRIPTION = "School of Engineering & Technology";
+    /**
+     * Class constant variable for the default office location
+     */
+    public static final String DEFAULT_OFFICE = "H-140";
+    /**
+     * Class constant variable for the default phone extension
+     */
+    public static final int DEFAULT_PHONE_EXTENSION = 1234;
+    
     
     /**
-     * Class instance variables
+     * Class instance variable for the school code
      */
     private String schoolCode;
+    /**
+     * Class instance variable for the school description
+     */
     private String schoolDescription;
+    /**
+     * Class instance variable for the office location
+     */
     private String office;
+    /**
+     * Class instance variable for the phone extension
+     */
     private int extension;
 
     /**
@@ -62,7 +84,7 @@ public class Faculty extends User {
 
     /**
      * Returns the school code
-     * @return {String}
+     * @return the school code
      */
     public String getSchoolCode() {
         return schoolCode;
@@ -78,7 +100,7 @@ public class Faculty extends User {
 
     /**
      * Returns the school description
-     * @return {String}
+     * @return the school description
      */
     public String getSchoolDescription() {
         return schoolDescription;
@@ -94,7 +116,7 @@ public class Faculty extends User {
 
     /**
      * Returns the faculty office location
-     * @return {String}
+     * @return the office location
      */
     public String getOffice() {
         return office;
@@ -110,7 +132,7 @@ public class Faculty extends User {
 
     /**
      * Returns the faculty's phone extension
-     * @return {int}
+     * @return the phone extension
      */
     public int getExtension() {
         return extension;
@@ -126,7 +148,7 @@ public class Faculty extends User {
 
     /**
      * Returns the faculty type to the display
-     * @return {String}
+     * @return the user type
      */
     @Override
     public String getTypeForDisplay() {
@@ -135,7 +157,7 @@ public class Faculty extends User {
     
     /**
      * Returns the content of the faculty class as a string
-     * @return {String}
+     * @return the content in a string
      */
     @Override
     public String toString(){

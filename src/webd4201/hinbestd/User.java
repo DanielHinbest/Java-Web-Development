@@ -14,31 +14,85 @@ import java.util.Locale;
 public class User implements CollegeInterface {
     
     /**
-     * Constant variables for the User class
+     * The class constant for the default ID
      */
-    public final long DEFAULT_ID = 100123456;
-    public final String DEFAULT_PASSWORD = "password";
-    public final byte MINIMUM_PASSWORD_LENGTH = 8;
-    public final byte MAXIMUM_PASSWORD_LENGTH = 40;
-    public final String DEFAULT_FIRST_NAME = "John";
-    public final String DEFAULT_LAST_NAME = "Doe";
-    public final String DEFAULT_EMAIL_ADDRESS = "john.doe@dcmail.com";
-    public final boolean DEFAULT_ENABLED_STATUS = true;
-    public final char DEFAULT_TYPE = 's';
-    public final byte ID_NUMBER_LENGTH = 9;
-    public final DateFormat DF = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CANADA);
+    public static final long DEFAULT_ID = 100123456L;
+    /**
+     * The class constant for the default password
+     */
+    public static final String DEFAULT_PASSWORD = "password";
+    /**
+     * The class constant for the minimum password length
+     */
+    public static final byte MINIMUM_PASSWORD_LENGTH = 8;
+    /**
+     * The class constant for the maximum password length
+     */
+    public static final byte MAXIMUM_PASSWORD_LENGTH = 40;
+    /**
+     * The class constant for the default first name
+     */
+    public static final String DEFAULT_FIRST_NAME = "John";
+    /**
+     * The class constant for the default last name
+     */
+    public static final String DEFAULT_LAST_NAME = "Doe";
+    /**
+     * The class constant for the default email address
+     */
+    public static final String DEFAULT_EMAIL_ADDRESS = "john.doe@dcmail.com";
+    /**
+     * The class constant for the default enabled status
+     */
+    public static final boolean DEFAULT_ENABLED_STATUS = true;
+    /**
+     * The class constant for the default user type
+     */
+    public static final char DEFAULT_TYPE = 's';
+    /**
+     * The class constant for the ID length
+     */
+    public static final byte ID_NUMBER_LENGTH = 9;
+    /**
+     * The class constant for the date format
+     */
+    public static final DateFormat DF = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CANADA);
     
     /**
-     * The instance variables for the user class
+     * The instance variable for the user ID
      */
     private long id;
+    /**
+     * The instance variable for the user password
+     */
     private String password;
+    /**
+     * The instance variable for the first name
+     */
     private String firstName;
+    /**
+     * The instance variable for the last name
+     */
     private String lastName;
+    /**
+     * The instance variable for the email address
+     */
     private String emailAddress;
+    /**
+     * The instance variable for the last access date
+     */
     private Date lastAccess;
+    /**
+     * The instance variable for the enrollment date
+     */
     private Date enrolDate;
+    /**
+     * The instance variable for the user's enabled status
+     */
     private boolean enabled;
+    /**
+     * The instance variable for the user type
+     */
     private char type;
 
     /**
@@ -80,7 +134,7 @@ public class User implements CollegeInterface {
     
     /**
      * Returns the ID of the user
-     * @return {long}
+     * @return the ID
      */
     public long getId() {
         return id;
@@ -96,7 +150,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's password
-     * @return {String}
+     * @return the password
      */
     public String getPassword() {
         return password;
@@ -112,7 +166,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's first name
-     * @return {String}
+     * @return the first name
      */
     public String getFirstName() {
         return firstName;
@@ -128,7 +182,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's last name
-     * @return {String}
+     * @return the last name
      */
     public String getLastName() {
         return lastName;
@@ -144,7 +198,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's email address
-     * @return {String}
+     * @return email address
      */
     public String getEmailAddress() {
         return emailAddress;
@@ -160,7 +214,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's last access date
-     * @return {Date}
+     * @return last access date
      */
     public Date getLastAccess() {
         return lastAccess;
@@ -176,7 +230,7 @@ public class User implements CollegeInterface {
 
     /**
      * Gets the user's enrollment date
-     * @return {Date}
+     * @return the enrollment date
      */
     public Date getEnrolDate() {
         return enrolDate;
@@ -192,7 +246,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's enabled status
-     * @return {boolean}
+     * @return the enabled status
      */
     public boolean isEnabled() {
         return enabled;
@@ -208,7 +262,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user type
-     * @return {char}
+     * @return the user type
      */
     public char getType() {
         return type;
@@ -224,16 +278,16 @@ public class User implements CollegeInterface {
    
     /**
      * Base class function for returning the user type for the display
-     * @return {String}
+     * @return the user type
      */
     @Override
     public String getTypeForDisplay(){
-        return "";
+        return "User";
     }
 
     /**
      * Converts the user information into a string to output to the screen
-     * @return {String}
+     * @return the string
      */
     @Override
     public String toString() {
@@ -253,7 +307,7 @@ public class User implements CollegeInterface {
     /**
      * Checks for a valid ID entry and returns true if the ID is valid, and false if invalid
      * @param id
-     * @return {boolean}
+     * @return the validity status
      */
     public static boolean verifyID(long id){
         if (id < MINIMUM_ID_NUMBER || id > MAXIMUM_ID_NUMBER){

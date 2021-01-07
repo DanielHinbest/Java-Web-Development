@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package webd4201.hinbestd;
 
 import java.util.Date;
@@ -11,18 +14,33 @@ import java.util.Vector;
  */
 public class Student extends User {
     /**
-     * Class constants
+     * Class constant variable for the default program code
      */
-    public final String DEFAULT_PROGRAM_CODE = "UNDC";
-    public final String DEFAULT_PROGRAM_DESCRIPTION = "Undeclared";
-    public final int DEFAULT_YEAR = 1;
+    public static final String DEFAULT_PROGRAM_CODE = "UNDC";
+    /**
+     * Class constant variable for the default program description
+     */
+    public static final String DEFAULT_PROGRAM_DESCRIPTION = "Undeclared";
+    /**
+     * Class constant variable for the default program year
+     */
+    public static final int DEFAULT_YEAR = 1;
     
     /**
-     * Private instance variables
+     * Private instance variable for the program code
      */
     private String programCode;
+    /**
+     * Private instance variable for the program description
+     */
     private String programDescription;
+    /**
+     * Private instance variable for the current year of study
+     */
     private int year;
+    /**
+     * Private instance vector set with the marks
+     */
     private Vector<Mark> marks; // Maybe ask about the vector's capacity
 
     /**
@@ -93,7 +111,7 @@ public class Student extends User {
     
     /**
      * Returns the program code
-     * @return {String}
+     * @return the program code
      */
     public String getProgramCode() {
         return programCode;
@@ -109,7 +127,7 @@ public class Student extends User {
 
     /**
      * Returns the program description
-     * @return {String}
+     * @return the program description
      */
     public String getProgramDescription() {
         return programDescription;
@@ -125,7 +143,7 @@ public class Student extends User {
 
     /**
      * Returns the student's year of study
-     * @return {int}
+     * @return the program year
      */
     public int getYear() {
         return year;
@@ -141,7 +159,7 @@ public class Student extends User {
 
     /**
      * Returns the student's marks
-     * @return {Vector}
+     * @return the vector of marks
      */
     public Vector<Mark> getMarks() {
         return marks;
@@ -157,7 +175,7 @@ public class Student extends User {
 
     /**
      * Overrides the toString function to output the contents for a student
-     * @return {String}
+     * @return the class contents in a string
      */
     @Override
     public String toString() {
