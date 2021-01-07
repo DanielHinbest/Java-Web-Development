@@ -22,6 +22,6 @@ public class InvalidUserDataException extends Exception {
      * @param message 
      */
     public InvalidUserDataException(String message){
-        
+        super(message);
     }
 }

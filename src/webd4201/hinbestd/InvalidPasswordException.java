@@ -22,6 +22,6 @@ public class InvalidPasswordException extends Exception{
      * @param message 
      */
     public InvalidPasswordException(String message){
-        
+        super(message);
     }
 }

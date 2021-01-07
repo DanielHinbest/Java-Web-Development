@@ -41,7 +41,7 @@ public class Faculty extends User {
      * @param enabled
      * @param type 
      */
-    public Faculty(String schoolCode, String schoolDescription, String office, int extension, long id, String password, String firstName, String lastName, String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, char type) {
+    public Faculty(long id, String password, String firstName, String lastName, String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, char type, String schoolCode, String schoolDescription, String office, int extension) {
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
         this.setSchoolCode(schoolCode);
         this.setSchoolDescription(schoolDescription);

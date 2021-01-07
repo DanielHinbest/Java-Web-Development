@@ -22,6 +22,6 @@ public class InvalidNameException extends Exception {
      * @param message 
      */
     public InvalidNameException(String message){
-        
+        super(message);
     }
 }

@@ -22,6 +22,6 @@ public class InvalidIdException extends Exception {
      * @param message 
      */
     public InvalidIdException(String message){
-        
+        super(message);
     }
 }

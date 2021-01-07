@@ -41,7 +41,7 @@ public class Student extends User {
      * @param enabled
      * @param type 
      */
-    public Student(String programCode, String programDescription, int year, Vector<Mark> marks, long id, String password, String firstName, String lastName, String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, char type) {
+    public Student(long id, String password, String firstName, String lastName, String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, char type, String programCode, String programDescription, int year, Vector<Mark> marks) {
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
         this.setProgramCode(programCode);
         this.setProgramDescription(programDescription);
@@ -64,7 +64,7 @@ public class Student extends User {
      * @param enabled
      * @param type 
      */
-    public Student(String programCode, String programDescription, int year, long id, String password, String firstName, String lastName, String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, char type) {
+    public Student(long id, String password, String firstName, String lastName, String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, char type, String programCode, String programDescription, int year ) {
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
         this.setProgramCode(programCode);
         this.setProgramDescription(programDescription);
