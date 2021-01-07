@@ -6,7 +6,7 @@ package webd4201.hinbestd;
  * @version 1.0 (2020-01-07)
  * @since 1.0
  */
-public class InvalidUserDataException {
+public class InvalidUserDataException extends Exception {
     // Removes the warning from the Exception class
     private static final long serialVersionUID = 1L;
     
