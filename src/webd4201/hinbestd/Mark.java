@@ -25,7 +25,12 @@ public class Mark {
     private int result;
     private float gpaWeighting;
 
-    
+    public Mark(String courseCode, String courseName, int result, float gpaWeighting) {
+        this.setCourseCode(courseCode);
+        this.setCourseName(courseName);
+        this.setResult(result);
+        this.setGpaWeighting(gpaWeighting);
+    }
     
     /**
      * Returns the course code
@@ -91,4 +96,8 @@ public class Mark {
         this.gpaWeighting = gpaWeighting;
     }
     
+    @Override
+    public String toString(){
+        return String.format("%-35s", this.getCourseCode(), "%-35s", this.getCourseName(), "%-35s", this.getResult(), "%-35s", this.getGpaWeighting());        
+    }
 }
