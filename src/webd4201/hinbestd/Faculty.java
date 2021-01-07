@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * This class inherits from User to create a new faculty member with the necessary information
- * @author Daniel
+ * @author Daniel Hinbest
  * @version 1.0 (2021-01-07)
  * @since 1.0
  */

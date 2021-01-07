@@ -7,7 +7,7 @@ import java.util.Locale;
 
 /**
  * The user class, which is used to implement the CollegeInterface and is the super class for different types of users (Faculty, Students)
- * @author Daniel
+ * @author Daniel Hinbest
  * @version 1.0 (2020-01-07)
  * @since 1.0
  */
