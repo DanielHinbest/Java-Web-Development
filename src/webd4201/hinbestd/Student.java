@@ -5,7 +5,7 @@ import java.util.Vector;
 
 /**
  * Inherited from the User class, the Student class creates a new Student with unique attributes to go with the common attributes from User
- * @author Daniel
+ * @author Daniel Hinbest
  * @version 1.0 (2020-01-07)
  * @since 1.0
  */
