@@ -7,6 +7,7 @@ package webd4201.hinbestd;  //change this to make the class part of your package
  * @since 1.0
  */
 import java.util.*;
+import webd4201.hinbestd.Exceptions.*;
 
 public class Lab1Tester {
 
@@ -30,7 +31,7 @@ public class Lab1Tester {
 		try{
 			student1 = new Student(123L,"password", "Robert", "McReady", "bob.mcready@dcmail.ca",
 								enrol, lastAccess, true, 's', "CPA", "Computer Programmer Analyst", 3);
-			student1.dump();
+                        student1.dump();
 		}catch(InvalidUserDataException iude){
 			System.out.println(iude.getMessage());
 		}catch(NumberFormatException test)

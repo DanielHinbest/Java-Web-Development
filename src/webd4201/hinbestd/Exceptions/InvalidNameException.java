@@ -1,15 +1,15 @@
 /**
  * 
  */
-package webd4201.hinbestd;
+package webd4201.hinbestd.Exceptions;
 
 /**
- * Creates a new exception for an invalid ID
- * @author Daniel Hinbest
+ * Creates a new Exception for an invalid name
+ * @author Daniel
  * @version 1.0 (2020-01-07)
  * @since 1.0
  */
-public class InvalidIdException extends Exception {
+public class InvalidNameException extends Exception {
     /**
      * Removes the warning from the Exception class
      */
@@ -18,7 +18,7 @@ public class InvalidIdException extends Exception {
     /**
      * Default constructor to create a new exception
      */
-    public InvalidIdException(){
+    public InvalidNameException(){
         
     }
     
@@ -26,7 +26,7 @@ public class InvalidIdException extends Exception {
      * Parameterized constructor for a new exception with a message
      * @param message 
      */
-    public InvalidIdException(String message){
+    public InvalidNameException(String message){
         super(message);
     }
 }
