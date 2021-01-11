@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Lab1Tester {
 
-	public static void main(String[] args) throws InvalidIdException, InvalidPasswordException, InvalidNameException {
+	public static void main(String[] args) {
 		
 		System.out.println("******************** Deliverable 1 Output ********************\n");
 		
@@ -27,69 +27,69 @@ public class Lab1Tester {
 							"Trying to instantiating a random student before displaying it, passing:\n" +
 							"\n\tStudent student1 = new Student(123L, \"password\", \"Robert\", \"McReady\"," +
 							" \"bob.mcready@dcmail.ca\", enrol, lastAccess, 's', true, \"CPA\", \"Computer Programmer Analyst\", 3);\n"); 
-		try{
+//		try{
 			student1 = new Student(123L,"password", "Robert", "McReady", "bob.mcready@dcmail.ca",
 								enrol, lastAccess, true, 's', "CPA", "Computer Programmer Analyst", 3);
 			student1.dump();
-		}catch(InvalidUserDataException iude){
-			System.out.println(iude.getMessage());
-		}catch(NumberFormatException test)
-		{
-			System.out.println(test.getMessage());
-		}
+//		}catch(InvalidUserDataException iude){
+//			System.out.println(iude.getMessage());
+//		}catch(NumberFormatException test)
+//		{
+//			System.out.println(test.getMessage());
+//		}
 		System.out.println("\nThe following will cause an Exception based on student id being too big(10012345678L).\n"+
 				"Trying to instantiating a random student before displaying it, passing:\n\t" +
 				"Student student1 = new Student(10012345678L, \"password\", \"Robert\", \"McReady\"," +
 				" \"bob.mcready@dcmail.ca\", enrol, lastAccess, 's', true, \"CPA\", \"Computer Programmer Analyst\", 3);\n"); 
-		try{
+//		try{
 			student1 = new Student(10012345678L,"password", "Robert", "McReady", "bob.mcready@dcmail.ca",
 					enrol, lastAccess, true, 's', "CPA", "Computer Programmer Analyst", 3);
 			student1.dump();
-		}catch(InvalidUserDataException iude){
-			System.out.println(iude.getMessage());
-		}
+//		}catch(InvalidUserDataException iude){
+//			System.out.println(iude.getMessage());
+//		}
 		System.out.println("\nThe following will not cause an Exception (data is valid).\n"+
 				"Trying to instantiating a student before displaying it, passing:\n\t" +
 				"Student student1 = new Student(10012345678L, \"password\", \"Robert\", \"McReady\"," +
 				" \"bob.mcready@dcmail.ca\", enrol, lastAccess, 's', true, \"CPA\", \"Computer Programmer Analyst\", 3);\n"); 
-		try{
+//		try{
 			student1 = new Student(100123456L,"password", "Robert", "McReady", "bob.mcready@dcmail.ca",
 					enrol, lastAccess, true, 's', "CPA", "Computer Programmer Analyst", 3);
 			student1.dump();
-			try{
+//			try{
 				System.out.println("\nTry to set the last name for student1 to an empty string.");
 				student1.setLastName("");
-			}catch(InvalidNameException ine)
-			{
-				System.out.println(ine.getMessage());
-			}
-			try{
+//			}catch(InvalidNameException ine)
+//			{
+//				System.out.println(ine.getMessage());
+//			}
+//			try{
 				long newId = -100123456L;
 				System.out.println("\nTry to set the id for student1 to an invalid number: " + newId + ".");
 				student1.setId(newId);
-			}catch(InvalidIdException iie)
-			{
-				System.out.println(iie.getMessage());
-			}
-			try{
+//			}catch(InvalidIdException iie)
+//			{
+//				System.out.println(iie.getMessage());
+//			}
+//			try{
 				String newPassword = "tiny";
 				System.out.println("\nTry to set the password for student1 to a String that is not valid (too short): " + newPassword + ".");
 				student1.setPassword(newPassword);
-			}catch(InvalidPasswordException ipe)
-			{
-				System.out.println(ipe.getMessage());
-			}
-			try{
-				String newPassword = "supercrazylongpassword";
+//			}catch(InvalidPasswordException ipe)
+//			{
+//				System.out.println(ipe.getMessage());
+//			}
+//			try{
+//				String newPassword = "supercrazylongpassword";
 				System.out.println("\nTry to set the password to a String that is not valid (too long): " + newPassword + ".");
 				student1.setPassword(newPassword);
-			}catch(InvalidPasswordException ipe)
-			{
-				System.out.println(ipe.getMessage());
-			}
-		}catch(InvalidUserDataException iude){
-			System.out.println(iude.getMessage());
-		}
+//			}catch(InvalidPasswordException ipe)
+//			{
+//				System.out.println(ipe.getMessage());
+//			}
+//		}catch(InvalidUserDataException iude){
+//			System.out.println(iude.getMessage());
+//		}
 		
 		System.out.println("\n*************************************************************************************************************");
 		System.out.println("NOTE: any exceptions displayed while instantiating Faculty objects will call the toString() method, " +
@@ -104,15 +104,15 @@ public class Lab1Tester {
 				"professor = new Faculty(\""+ possibleId +"\", \"another password\", \"Darren\", \"Puffer\", " +
 				"\"darren.puffer@durhamcollege.ca\", enrol, lastAccess, 'f', true, " +
 				"\"BITM\", \"School of Business, IT & Management\", \"C-315\", 2044);\n"); 
-		try{
+//		try{
 			professor = new Faculty(possibleId, "another password", "Darren", "Puffer", "darren.puffer@durhamcollege.ca", enrol, lastAccess, true, 'f',
 					"BITM", "School of Business, IT & Management", "C-315", 2044);
 			professor.dump();
-		}catch(InvalidUserDataException ide)
-		{
-			System.out.println("Problem creating a professor with an id of: \"" + possibleId + "\"\n\t " + ide.toString());
+//		}catch(InvalidUserDataException ide)
+//		{
+//			System.out.println("Problem creating a professor with an id of: \"" + possibleId + "\"\n\t " + ide.toString());
 			
-		}
+//		}
 		
 		System.out.println("\nThe following will cause an InvalidUserDataException based on a missing first name,\n"+
 				"the program demonstrates that InvalidUserDataException (in fact any/all Exceptions) can be caught by\n"
@@ -121,15 +121,16 @@ public class Lab1Tester {
 				"professor = new Faculty(\""+ possibleId +"\", \"somepassword\", \"\", \"Puffer\", " +
 				"\"darren.puffer@durhamcollege.ca\", enrol, lastAccess, 'f', true, " +
 				"\"BITM\", \"School of Business, IT & Management\", \"C-315\", 2044);\n");  
-		try{
+//		try{
 			professor = new Faculty(possibleId, "somepassword", "", "Puffer", "darren.puffer@durhamcollege.ca", enrol, lastAccess, true, 'f',
 					"BITM", "School of Business, IT & Management", "C-315", 2044);
 			professor.dump();
-		}catch(Exception e)
-		{
-			System.out.println("Problem creating a professor with an id of: \"" + possibleId + "\"\n\t " + e.toString());
-		}
-		
+//		}catch(Exception e)
+//		{
+//			System.out.println("Problem creating a professor with an id of: \"" + possibleId + "\"\n\t " + e.toString());
+//		}
+//		
 	}
 
 }
+

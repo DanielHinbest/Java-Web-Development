@@ -1,12 +1,15 @@
-package webd4201.hinbestd;
+/**
+ * 
+ */
+package webd4201.hinbestd.Exceptions;
 
 /**
- * Creates a new Exception for an invalid password
- * @author Daniel Hinbest
+ * Creates a new Exception for invalid user data
+ * @author Daniel
  * @version 1.0 (2020-01-07)
  * @since 1.0
  */
-public class InvalidPasswordException extends Exception{    
+public class InvalidUserDataException extends Exception {
     /**
      * Removes the warning from the Exception class
      */
@@ -15,7 +18,7 @@ public class InvalidPasswordException extends Exception{
     /**
      * Default constructor to create a new exception
      */
-    public InvalidPasswordException(){
+    public InvalidUserDataException(){
         
     }
     
@@ -23,7 +26,7 @@ public class InvalidPasswordException extends Exception{
      * Parameterized constructor for a new exception with a message
      * @param message 
      */
-    public InvalidPasswordException(String message){
+    public InvalidUserDataException(String message){
         super(message);
     }
 }
