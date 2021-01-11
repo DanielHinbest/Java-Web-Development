@@ -7,6 +7,7 @@ package webd4201.hinbestd;  //change this to make the class part of your package
  * @since 1.0
  */
 import java.util.*;
+import webd4201.hinbestd.Exceptions.*;
 
 public class Lab1Tester {
 
