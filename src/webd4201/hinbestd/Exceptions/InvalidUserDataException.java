@@ -1,6 +1,3 @@
-/**
- * 
- */
 package webd4201.hinbestd.Exceptions;
 
 /**
@@ -16,17 +13,19 @@ public class InvalidUserDataException extends Exception {
     private static final long serialVersionUID = 1L;
     
     /**
-     * Default constructor to create a new exception
+     * Creates a new instance of <code>InvalidUserDataException</code> without
+     * detail message.
      */
-    public InvalidUserDataException(){
-        
+    public InvalidUserDataException() {
     }
-    
+
     /**
-     * Parameterized constructor for a new exception with a message
-     * @param message 
+     * Constructs an instance of <code>InvalidUserDataException</code> with the
+     * specified detail message.
+     *
+     * @param msg the detail message.
      */
-    public InvalidUserDataException(String message){
-        super(message);
+    public InvalidUserDataException(String msg) {
+        super(msg);
     }
 }

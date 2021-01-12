@@ -1,6 +1,3 @@
-/**
- * 
- */
 package webd4201.hinbestd.Exceptions;
 
 /**
@@ -16,17 +13,19 @@ public class InvalidNameException extends Exception {
     private static final long serialVersionUID = 1L;
     
     /**
-     * Default constructor to create a new exception
+     * Creates a new instance of <code>InvalidNameException</code> without
+     * detail message.
      */
-    public InvalidNameException(){
-        
+    public InvalidNameException() {
     }
-    
+
     /**
-     * Parameterized constructor for a new exception with a message
-     * @param message 
+     * Constructs an instance of <code>InvalidNameException</code> with the
+     * specified detail message.
+     *
+     * @param msg the detail message.
      */
-    public InvalidNameException(String message){
-        super(message);
+    public InvalidNameException(String msg) {
+        super(msg);
     }
 }
