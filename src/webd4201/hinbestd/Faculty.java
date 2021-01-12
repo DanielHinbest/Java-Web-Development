@@ -4,6 +4,7 @@
 package webd4201.hinbestd;
 
 import java.util.Date;
+import webd4201.hinbestd.Exceptions.*;
 
 /**
  * This class inherits from User to create a new faculty member with the necessary information
@@ -62,8 +63,14 @@ public class Faculty extends User {
      * @param enrolDate
      * @param enabled
      * @param type 
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
      */
-    public Faculty(long id, String password, String firstName, String lastName, String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, char type, String schoolCode, String schoolDescription, String office, int extension) {
+    public Faculty(long id, String password, String firstName, String lastName, 
+            String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, 
+            char type, String schoolCode, String schoolDescription, String office, int extension) 
+            throws InvalidIdException, InvalidPasswordException, InvalidNameException{
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
         this.setSchoolCode(schoolCode);
         this.setSchoolDescription(schoolDescription);

@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
+import webd4201.hinbestd.Exceptions.*;
 
 /**
  * The user class, which is used to implement the CollegeInterface and is the super class for different types of users (Faculty, Students)
@@ -106,8 +107,12 @@ public class User implements CollegeInterface {
      * @param enrolDate
      * @param enabled
      * @param type 
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
      */
-    public User(long id, String password, String firstName, String lastName, String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, char type) {
+    public User(long id, String password, String firstName, String lastName, String emailAddress, 
+            Date lastAccess, Date enrolDate, boolean enabled, char type) throws InvalidIdException, InvalidPasswordException, InvalidNameException {
         this.setId(id);
         this.setPassword(password);
         this.setFirstName(firstName);
@@ -143,8 +148,9 @@ public class User implements CollegeInterface {
     /**
      * Sets the user ID
      * @param id 
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
      */
-    public void setId(long id) {
+    public void setId(long id) throws InvalidIdException {
         this.id = id;
     }
 
@@ -159,8 +165,9 @@ public class User implements CollegeInterface {
     /**
      * Sets the user's password
      * @param password 
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
      */
-    public void setPassword(String password) {
+    public void setPassword(String password) throws InvalidPasswordException {
         this.password = password;
     }
 
@@ -175,8 +182,9 @@ public class User implements CollegeInterface {
     /**
      * Sets the user's first name
      * @param firstName 
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
      */
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) throws InvalidNameException {
         this.firstName = firstName;
     }
 
@@ -191,8 +199,9 @@ public class User implements CollegeInterface {
     /**
      * Sets the user's last name
      * @param lastName 
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
      */
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) throws InvalidNameException {
         this.lastName = lastName;
     }
 

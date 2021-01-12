@@ -5,6 +5,7 @@ package webd4201.hinbestd;
 
 import java.util.Date;
 import java.util.Vector;
+import webd4201.hinbestd.Exceptions.*;
 
 /**
  * Inherited from the User class, the Student class creates a new Student with unique attributes to go with the common attributes from User
@@ -58,8 +59,14 @@ public class Student extends User {
      * @param enrolDate
      * @param enabled
      * @param type 
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
      */
-    public Student(long id, String password, String firstName, String lastName, String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, char type, String programCode, String programDescription, int year, Vector<Mark> marks) {
+    public Student(long id, String password, String firstName, String lastName, 
+            String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
+            char type, String programCode, String programDescription, int year, Vector<Mark> marks) 
+            throws InvalidIdException, InvalidPasswordException, InvalidNameException {
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
         this.setProgramCode(programCode);
         this.setProgramDescription(programDescription);
@@ -81,8 +88,14 @@ public class Student extends User {
      * @param enrolDate
      * @param enabled
      * @param type 
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
      */
-    public Student(long id, String password, String firstName, String lastName, String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, char type, String programCode, String programDescription, int year ) {
+    public Student(long id, String password, String firstName, String lastName, 
+            String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
+            char type, String programCode, String programDescription, int year ) 
+            throws InvalidIdException, InvalidPasswordException, InvalidNameException {
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
         this.setProgramCode(programCode);
         this.setProgramDescription(programDescription);
@@ -92,8 +105,11 @@ public class Student extends User {
     
     /**
      * Default constructor to create a new Student with all default values
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException
      */
-    public Student(){
+    public Student() throws InvalidIdException, InvalidPasswordException, InvalidNameException{
 //        this(DEFAULT_ID, DEFAULT_PASSWORD, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL_ADDRESS, new Date(), new Date(), DEFAULT_TYPE, DEFAULT_ENABLED_STATUS, DEFAULT_PROGRAM_CODE, DEFAULT_PROGRAM_DESCRIPTION, DEFAULT_YEAR);
         this.setId(DEFAULT_ID);
         this.setPassword(DEFAULT_PASSWORD);
