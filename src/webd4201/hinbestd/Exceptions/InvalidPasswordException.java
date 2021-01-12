@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package webd4201.hinbestd.Exceptions;
 
 /**
@@ -27,10 +22,41 @@ public class InvalidPasswordException extends Exception {
     /**
      * Constructs an instance of <code>InvalidPasswordException</code> with the
      * specified detail message.
-     *
      * @param msg the detail message.
      */
     public InvalidPasswordException(String msg) {
         super(msg);
     }
+    
+    /**
+     * Constructs an instance of <code>InvalidPasswordException</code> with a
+     * throwable cause
+     * @param cause what caused the exception
+     */
+    public InvalidPasswordException(Throwable cause){
+        super(cause);
+    }
+    
+    /**
+     * Constructs an instance of <code>InvalidPasswordException</code> with the 
+     * message and the cause of the exception
+     * @param msg the detail message
+     * @param cause what caused the exception
+     */
+    public InvalidPasswordException(String msg, Throwable cause){
+        super(msg, cause);
+    }
+    
+    /**
+     * Constructs an instance of <code>InvalidPasswordException</code> with the
+     * message, the cause, suppression, and a writable stack trace
+     * @param msg the detail message
+     * @param cause what caused the exception
+     * @param enableSuppression enables/disables suppression
+     * @param writableStackTrace  enables/disables writableStackTrace
+     */
+    public InvalidPasswordException(String msg, Throwable cause, boolean enableSuppression, boolean writableStackTrace){
+        super(msg, cause, enableSuppression, writableStackTrace);
+    }
+    
 }

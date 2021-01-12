@@ -28,4 +28,27 @@ public class InvalidNameException extends Exception {
     public InvalidNameException(String msg) {
         super(msg);
     }
+    
+    /**
+     * Constructs an instance of <code>InvalidNameException</code> with the
+     * message and cause of the exception
+     * @param cause what caused the exception
+     */
+    public InvalidNameException(Throwable cause){
+        super(cause);
+    }
+    
+    /**
+     * Constructs an instance of <code>InvalidNameException</code> with the 
+     * message and the cause of the exception
+     * @param msg the detail message
+     * @param cause what caused the exception
+     */
+    public InvalidNameException(String msg, Throwable cause){
+        super(msg, cause);
+    }
+    
+    public InvalidNameException(String msg, Throwable cause, boolean enableSuppression, boolean writableStackTrace){
+        super(msg, cause, enableSuppression, writableStackTrace);
+    }
 }
