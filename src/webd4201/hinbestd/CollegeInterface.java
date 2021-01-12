@@ -21,11 +21,11 @@ public interface CollegeInterface {
     /**
      * The class constant for the Minimum ID Number
      */
-    public static final long MINIMUM_ID_NUMBER = 100000000;    
+    public static final long MINIMUM_ID_NUMBER = 100000000L;    
     /**
      * The class constant for the Maximum ID Number
      */
-    public static final long MAXIMUM_ID_NUMBER = 999999999;    
+    public static final long MAXIMUM_ID_NUMBER = 999999999L;    
     /**
      * The class constant for the Minimum Password Length
      */
@@ -37,7 +37,7 @@ public interface CollegeInterface {
     
     /**
      * The function header for the classes to display the type of user
-     * @return {String}
+     * @return the user type
      */
     public String getTypeForDisplay();
 }
