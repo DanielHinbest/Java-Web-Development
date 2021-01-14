@@ -1,6 +1,3 @@
-/**
- * 
- */
 package webd4201.hinbestd;
 
 import java.util.Date;
@@ -161,7 +158,7 @@ public class Faculty extends User {
      * @return the user type
      */
     @Override
-    public String getTypeForDisplay() { //Get rid of "User"
+    public String getTypeForDisplay() { 
         String output = super.getTypeForDisplay();
         return output.replaceAll("User", "Faculty");
     }
@@ -174,8 +171,8 @@ public class Faculty extends User {
     public String toString(){
         return this.getTypeForDisplay() + " " 
                 + super.toString()
-                + this.getSchoolDescription() + " (" + this.getSchoolCode() + ")"
-                + "Office: " + this.getOffice()
-                + PHONE_NUMBER + " x" + this.getExtension();
+                + "\n\t" + this.getSchoolDescription() + " (" + this.getSchoolCode() + ")"
+                + "\n\tOffice: " + this.getOffice()
+                + "\n\t" + PHONE_NUMBER + " x" + this.getExtension();
     }
 }

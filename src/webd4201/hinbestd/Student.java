@@ -170,6 +170,16 @@ public class Student extends User {
     public final void setMarks(Vector<Mark> marks) {
         this.marks = marks;
     }
+    
+    /**
+     * Returns the student's type to the display
+     * @return the user type
+     */
+    @Override
+    public String getTypeForDisplay() { 
+        String output = super.getTypeForDisplay();
+        return output.replaceAll("User", "Student");
+    }
 
     /**
      * Overrides the toString function to output the contents for a student

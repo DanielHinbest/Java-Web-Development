@@ -30,7 +30,7 @@ public class User implements CollegeInterface {
     /**
      * The class constant for the maximum password length
      */
-    public static final byte MAXIMUM_PASSWORD_LENGTH = 40;
+    public static final byte MAXIMUM_PASSWORD_LENGTH = 20;
     /**
      * The class constant for the default first name
      */

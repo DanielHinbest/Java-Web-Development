@@ -1,6 +1,3 @@
-/**
- * 
- */
 package webd4201.hinbestd;
 
 /**
@@ -26,14 +23,6 @@ public interface CollegeInterface {
      * The class constant for the Maximum ID Number
      */
     public static final long MAXIMUM_ID_NUMBER = 999999999L;    
-    /**
-     * The class constant for the Minimum Password Length
-     */
-    public static final byte MINIMUM_PASSWORD_LENGTH = 8;    
-    /**
-     * The class constant for the Maximum Password Length
-     */
-    public static final byte MAXIMUM_PASSWORD_LENGTH = 20;
     
     /**
      * The function header for the classes to display the type of user

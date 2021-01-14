@@ -1,6 +1,3 @@
-/**
- * 
- */
 package webd4201.hinbestd;
 
 import java.text.DecimalFormat;
