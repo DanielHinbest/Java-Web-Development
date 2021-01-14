@@ -1,6 +1,3 @@
-/**
- * 
- */
 package webd4201.hinbestd;
 
 import java.util.Date;
@@ -45,85 +42,69 @@ public class Student extends User {
     private Vector<Mark> marks; // Maybe ask about the vector's capacity
 
     /**
-     * Constructor to create a new Student with all attributes set
-     * @param programCode
-     * @param programDescription
-     * @param year
-     * @param marks
-     * @param id
-     * @param password
-     * @param firstName
-     * @param lastName
-     * @param emailAddress
-     * @param lastAccess
-     * @param enrolDate
-     * @param enabled
-     * @param type 
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
+     * Constructor to create a new Student with all attributes set     
+     * @param id the student ID number
+     * @param password the student's password
+     * @param firstName the student's first name
+     * @param lastName the student's last name
+     * @param emailAddress the student's email address
+     * @param lastAccess the student's date of last access
+     * @param enrolDate the student's enrollment date
+     * @param enabled the student's enabled status
+     * @param type the student's user type (Student)
+     * @param programCode the program's 3-4 character code
+     * @param programDescription the name of the program
+     * @param year the student's current year of study
+     * @param marks a vector of the student's marks
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
      */
     public Student(long id, String password, String firstName, String lastName, 
             String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
             char type, String programCode, String programDescription, int year, Vector<Mark> marks) 
-            throws InvalidIdException, InvalidPasswordException, InvalidNameException {
+            throws InvalidUserDataException {
         
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
-        this.setProgramCode(programCode);
-        this.setProgramDescription(programDescription);
-        this.setYear(year);
-        this.setMarks(marks);
+        try {
+            this.setProgramCode(programCode);
+            this.setProgramDescription(programDescription);
+            this.setYear(year);
+            this.setMarks(marks);
+        } catch (Exception e) {
+            throw new InvalidUserDataException(e.getMessage());
+        }
     }
 
     /**
-     * Overloaded from the first parameterized constructor to create a new Student with no marks
-     * @param programCode
-     * @param programDescription
-     * @param year
-     * @param id
-     * @param password
-     * @param firstName
-     * @param lastName
-     * @param emailAddress
-     * @param lastAccess
-     * @param enrolDate
-     * @param enabled
-     * @param type 
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
+     * Overloaded from the first parameterized constructor to create a new Student with no marks     
+     * @param id the student ID number
+     * @param password the student's password
+     * @param firstName the student's first name
+     * @param lastName the student's last name
+     * @param emailAddress the student's email address
+     * @param lastAccess the student's date of last access
+     * @param enrolDate the student's enrollment date
+     * @param enabled the student's enabled status
+     * @param type the student's user type (Student)
+     * @param programCode the program's 3-4 digit code
+     * @param programDescription the name of the program
+     * @param year the student's current year of study
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException 
      */
     public Student(long id, String password, String firstName, String lastName, 
             String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
             char type, String programCode, String programDescription, int year ) 
-            throws InvalidIdException, InvalidPasswordException, InvalidNameException {
-        super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
-        this.setProgramCode(programCode);
-        this.setProgramDescription(programDescription);
-        this.setYear(year);
-        this.setMarks(null);
+            throws InvalidUserDataException {
+        this(id, password, firstName, lastName, emailAddress, enrolDate, lastAccess, enabled, type, programCode, programDescription, year, null);
     }
     
     /**
      * Default constructor to create a new Student with all default values
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
      */
-    public Student() throws InvalidIdException, InvalidPasswordException, InvalidNameException{
-//        this(DEFAULT_ID, DEFAULT_PASSWORD, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL_ADDRESS, new Date(), new Date(), DEFAULT_TYPE, DEFAULT_ENABLED_STATUS, DEFAULT_PROGRAM_CODE, DEFAULT_PROGRAM_DESCRIPTION, DEFAULT_YEAR);
-        this.setId(DEFAULT_ID);
-        this.setPassword(DEFAULT_PASSWORD);
-        this.setFirstName(DEFAULT_FIRST_NAME);
-        this.setLastName(DEFAULT_LAST_NAME);
-        this.setEmailAddress(DEFAULT_EMAIL_ADDRESS);
-        this.setLastAccess(new Date());
-        this.setEnrolDate(new Date());
-        this.setType(DEFAULT_TYPE);
-        this.setEnabled(DEFAULT_ENABLED_STATUS);
-        this.setProgramCode(DEFAULT_PROGRAM_CODE);
-        this.setProgramDescription(DEFAULT_PROGRAM_DESCRIPTION);
-        this.setYear(DEFAULT_YEAR);
+    public Student() throws InvalidUserDataException{
+        this(DEFAULT_ID, DEFAULT_PASSWORD, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, 
+                DEFAULT_EMAIL_ADDRESS, new Date(), new Date(), DEFAULT_ENABLED_STATUS, 
+                DEFAULT_TYPE, DEFAULT_PROGRAM_CODE, DEFAULT_PROGRAM_DESCRIPTION, DEFAULT_YEAR);
     }
     
     /**
@@ -136,9 +117,9 @@ public class Student extends User {
 
     /**
      * Sets the program code
-     * @param programCode 
+     * @param programCode the 3-4 character program code
      */
-    public void setProgramCode(String programCode) {
+    public final void setProgramCode(String programCode) {
         this.programCode = programCode;
     }
 
@@ -152,9 +133,9 @@ public class Student extends User {
 
     /**
      * Sets the program description
-     * @param programDescription 
+     * @param programDescription the name of the program
      */
-    public void setProgramDescription(String programDescription) {
+    public final void setProgramDescription(String programDescription) {
         this.programDescription = programDescription;
     }
 
@@ -168,9 +149,9 @@ public class Student extends User {
 
     /**
      * Sets the student's year of study
-     * @param year 
+     * @param year the student's current year of study
      */
-    public void setYear(int year) {
+    public final void setYear(int year) {
         this.year = year;
     }
 
@@ -184,9 +165,9 @@ public class Student extends User {
 
     /**
      * Sets the student's marks
-     * @param marks 
+     * @param marks the vector of the student's marks
      */
-    public void setMarks(Vector<Mark> marks) {
+    public final void setMarks(Vector<Mark> marks) {
         this.marks = marks;
     }
 
@@ -203,31 +184,26 @@ public class Student extends User {
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "st year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
-//                break;
             case 2:
                 return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "nd year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
-//                break;
             case 3:
                 return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "rd year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
-//                break;
             case 4:
                 return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "th year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
-//                break;
             default:
                 return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.DEFAULT_FIRST_NAME + " " + this.DEFAULT_LAST_NAME + " (" + MINIMUM_ID_NUMBER + ")"
                         + "\n\t" + "Currently in " + this.DEFAULT_YEAR + "st year of " + this.DEFAULT_PROGRAM_DESCRIPTION + " (" + this.programCode + ")"
                         + "\n\t" + "Enrolled: " + new Date();
-//                break;
         }
     }
     

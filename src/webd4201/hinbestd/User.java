@@ -7,13 +7,15 @@ import java.util.Locale;
 import webd4201.hinbestd.Exceptions.*;
 
 /**
- * The user class, which is used to implement the CollegeInterface and is the super class for different types of users (Faculty, Students)
+ * The user class, which is used to implement the CollegeInterface and is the
+ * super class for different types of users (Faculty, Students)
+ *
  * @author Daniel Hinbest
  * @version 1.0 (2020-01-07)
  * @since 1.0
  */
 public class User implements CollegeInterface {
-    
+
     /**
      * The class constant for the default ID
      */
@@ -58,7 +60,7 @@ public class User implements CollegeInterface {
      * The class constant for the date format
      */
     public static final DateFormat DF = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CANADA);
-    
+
     /**
      * The instance variable for the user ID
      */
@@ -97,48 +99,50 @@ public class User implements CollegeInterface {
     private char type;
 
     /**
-     * The parameterized constructor - accepts the instance variables and assigns the data to the variables with the mutators
-     * @param id
-     * @param password
-     * @param firstName
-     * @param lastName
-     * @param emailAddress
-     * @param lastAccess
-     * @param enrolDate
-     * @param enabled
-     * @param type 
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
+     * The parameterized constructor - accepts the instance variables and
+     * assigns the data to the variables with the mutators
+     *
+     * @param id The ID number of the user
+     * @param password The user's password
+     * @param firstName The user's first name
+     * @param lastName The user's last name
+     * @param emailAddress The user's email address
+     * @param lastAccess The last time the user signed in
+     * @param enrolDate The date the user enrolled
+     * @param enabled Sets the user's accessibility
+     * @param type The user type (Student or Faculty)
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
      */
-    public User(long id, String password, String firstName, String lastName, String emailAddress, 
-            Date lastAccess, Date enrolDate, boolean enabled, char type) throws InvalidIdException, InvalidPasswordException, InvalidNameException {
-        this.setId(id);
-        this.setPassword(password);
-        this.setFirstName(firstName);
-        this.setLastName(lastName);
-        this.setEmailAddress(emailAddress);
-        this.setLastAccess(lastAccess);
-        this.setEnrolDate(enrolDate);
-        this.setEnabled(enabled);
-        this.setType(type);
+    public User(long id, String password, String firstName, String lastName, String emailAddress,
+            Date lastAccess, Date enrolDate, boolean enabled, char type) throws InvalidUserDataException {
+        try {
+            this.setId(id);
+            this.setPassword(password);
+            this.setFirstName(firstName);
+            this.setLastName(lastName);
+            this.setEmailAddress(emailAddress);
+            this.setLastAccess(lastAccess);
+            this.setEnrolDate(enrolDate);
+            this.setEnabled(enabled);
+            this.setType(type);
+        } catch (Exception e) {
+            throw new InvalidUserDataException(e.getMessage());
+        }
     }
-    
+
     /**
-     * Default constructor - creates a new instance of the User class with the default values from the constants
+     * Default constructor - creates a new instance of the User class with the
+     * default values from the constants
+     *
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
      */
-    public User(){
-        this.id = this.DEFAULT_ID;
-        this.password = this.DEFAULT_PASSWORD;
-        this.firstName = this.DEFAULT_FIRST_NAME;
-        this.lastName = this.DEFAULT_LAST_NAME;
-        this.emailAddress = this.DEFAULT_EMAIL_ADDRESS;
-        this.lastAccess = Date.from(Instant.now());
-        this.enrolDate = Date.from(Instant.now());
+    public User() throws InvalidUserDataException {
+        this(DEFAULT_ID, DEFAULT_PASSWORD, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL_ADDRESS, new Date(), new Date(), DEFAULT_ENABLED_STATUS, DEFAULT_TYPE);
     }
-    
+
     /**
      * Returns the ID of the user
+     *
      * @return the ID
      */
     public long getId() {
@@ -147,11 +151,16 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user ID
-     * @param id 
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
+     *
+     * @param id The user's ID number
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException
      */
-    public void setId(long id) throws InvalidIdException {
-        this.id = id;
+    public final void setId(long id) throws InvalidIdException {
+        if (verifyID(id)) {
+            this.id = id;
+        } else {
+            throw new InvalidIdException("The ID number must be between " + MINIMUM_ID_NUMBER + " and " + MINIMUM_ID_NUMBER);
+        }
     }
 
     /**
@@ -164,11 +173,16 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's password
-     * @param password 
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
+     * @param password the user's password input
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException
      */
-    public void setPassword(String password) throws InvalidPasswordException {
-        this.password = password;
+    public final void setPassword(String password) throws InvalidPasswordException {
+        if (password.length() >= MINIMUM_PASSWORD_LENGTH && password.length() <= MAXIMUM_PASSWORD_LENGTH) {
+            this.password = password;
+        }
+        else {
+            throw new InvalidPasswordException("The password length must be between "  + MINIMUM_PASSWORD_LENGTH + " and " + MAXIMUM_PASSWORD_LENGTH);
+        }
     }
 
     /**
@@ -181,11 +195,15 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's first name
-     * @param firstName 
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
+     * @param firstName the user's first name
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException
      */
-    public void setFirstName(String firstName) throws InvalidNameException {
-        this.firstName = firstName;
+    public final void setFirstName(String firstName) throws InvalidNameException {
+        if (firstName.length() == 0) {  //firstName.equals("")
+            this.firstName = firstName;
+        } else {
+            throw new InvalidNameException("The first name cannot be empty");
+        }
     }
 
     /**
@@ -198,11 +216,15 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's last name
-     * @param lastName 
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
+     * @param lastName the user's last name
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException
      */
-    public void setLastName(String lastName) throws InvalidNameException {
-        this.lastName = lastName;
+    public final void setLastName(String lastName) throws InvalidNameException {
+        if (lastName.length() == 0){
+            this.lastName = lastName;            
+        } else {
+            throw new InvalidNameException("The last name cannot be empty");
+        }
     }
 
     /**
@@ -215,10 +237,10 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's email address
-     * @param emailAddress 
+     * @param emailAddress the user's email address
      */
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public final void setEmailAddress(String emailAddress) {
+            this.emailAddress = emailAddress;         
     }
 
     /**
@@ -231,9 +253,9 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's last access date
-     * @param lastAccess 
+     * @param lastAccess the last date the user signed in
      */
-    public void setLastAccess(Date lastAccess) {
+    public final void setLastAccess(Date lastAccess) {
         this.lastAccess = lastAccess;
     }
 
@@ -247,9 +269,9 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's enrollment date
-     * @param enrolDate 
+     * @param enrolDate the date the user enrolled
      */
-    public void setEnrolDate(Date enrolDate) {
+    public final void setEnrolDate(Date enrolDate) {
         this.enrolDate = enrolDate;
     }
 
@@ -263,9 +285,9 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's enabled status
-     * @param enabled 
+     * @param enabled the user accessibility
      */
-    public void setEnabled(boolean enabled) {
+    public final void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -279,24 +301,24 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user type
-     * @param type 
+     * @param type the user type (Student or faculty)
      */
-    public void setType(char type) {
+    public final void setType(char type) {
         this.type = type;
-    }    
-   
+    }
+
     /**
      * Base class function for returning the user type for the display
      * @return the user type
      */
     @Override
-    public String getTypeForDisplay(){
+    public String getTypeForDisplay() {
         return "User";
     }
 
     /**
      * Converts the user information into a string to output to the screen
-     * @return the string
+     * @return the User content as a String
      */
     @Override
     public String toString() {
@@ -309,20 +331,20 @@ public class User implements CollegeInterface {
     /**
      * Dumps the user information for debugging
      */
-    public void dump(){
+    public void dump() {
         System.out.println(toString());
     }
-    
+
     /**
-     * Checks for a valid ID entry and returns true if the ID is valid, and false if invalid
-     * @param id
+     * Checks for a valid ID entry and returns true if the ID is valid, and
+     * false if invalid
+     * @param id the user's ID number
      * @return the validity status
      */
-    public static boolean verifyID(long id){
-        if (id < MINIMUM_ID_NUMBER || id > MAXIMUM_ID_NUMBER){
+    public static boolean verifyID(long id) {
+        if (id < MINIMUM_ID_NUMBER || id > MAXIMUM_ID_NUMBER) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }

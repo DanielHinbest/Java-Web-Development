@@ -50,38 +50,41 @@ public class Faculty extends User {
 
     /**
      * The parameterized constructor that creates a new Faculty member with the super-class parameter called to complete the inheritance of a user
-     * @param schoolCode
-     * @param schoolDescription
-     * @param office
-     * @param extension
-     * @param id
-     * @param password
-     * @param firstName
-     * @param lastName
-     * @param emailAddress
-     * @param lastAccess
-     * @param enrolDate
-     * @param enabled
-     * @param type 
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException 
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException 
+     * @param schoolCode the faculty's 3-4 character school code
+     * @param schoolDescription the faculty's school name
+     * @param office the faculty's office location
+     * @param extension the faculty's phone extension
+     * @param id the faculty's ID number
+     * @param password the faculty's password
+     * @param firstName the faculty's first name
+     * @param lastName the faculty's last name
+     * @param emailAddress the faculty's email address
+     * @param lastAccess the faculty's last access date
+     * @param enrolDate the faculty's enrollment date
+     * @param enabled the faculty's enabled status
+     * @param type the faculty's user type (Faculty)
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
      */
     public Faculty(long id, String password, String firstName, String lastName, 
             String emailAddress, Date lastAccess, Date enrolDate, boolean enabled, 
             char type, String schoolCode, String schoolDescription, String office, int extension) 
-            throws InvalidIdException, InvalidPasswordException, InvalidNameException{
+            throws InvalidUserDataException{
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
-        this.setSchoolCode(schoolCode);
-        this.setSchoolDescription(schoolDescription);
-        this.setOffice(office);
-        this.setExtension(extension);
+        try {
+            this.setSchoolCode(schoolCode);
+            this.setSchoolDescription(schoolDescription);
+            this.setOffice(office);
+            this.setExtension(extension);
+        } catch (Exception e) {
+            throw new InvalidUserDataException(e.getMessage());
+        }
     }
 
     /**
      * Default constructor to create a new faculty member with the default faculty values and the default user values with the super class called
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
      */
-    public Faculty() {
+    public Faculty() throws InvalidUserDataException {
         super();
         this.setSchoolCode(DEFAULT_SCHOOL_CODE);
         this.setSchoolDescription(DEFAULT_SCHOOL_DESCRIPTION);
@@ -99,9 +102,9 @@ public class Faculty extends User {
 
     /**
      * Sets the school code
-     * @param schoolCode 
+     * @param schoolCode the faculty's 3-4 digit school code
      */
-    public void setSchoolCode(String schoolCode) {
+    public final void setSchoolCode(String schoolCode) {
         this.schoolCode = schoolCode;
     }
 
@@ -115,9 +118,9 @@ public class Faculty extends User {
 
     /**
      * Sets the school description
-     * @param schoolDescription 
+     * @param schoolDescription the name of the school
      */
-    public void setSchoolDescription(String schoolDescription) {
+    public final void setSchoolDescription(String schoolDescription) {
         this.schoolDescription = schoolDescription;
     }
 
@@ -131,9 +134,9 @@ public class Faculty extends User {
 
     /**
      * Sets the faculty office location
-     * @param office 
+     * @param office the faculty's office location
      */
-    public void setOffice(String office) {
+    public final void setOffice(String office) {
         this.office = office;
     }
 
@@ -147,9 +150,9 @@ public class Faculty extends User {
 
     /**
      * Sets the faculty's phone extension
-     * @param extension 
+     * @param extension the faculty's phone extension
      */
-    public void setExtension(int extension) {
+    public final void setExtension(int extension) {
         this.extension = extension;
     }
 
