@@ -1,7 +1,6 @@
 package webd4201.hinbestd;
 
 import java.text.DateFormat;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 import webd4201.hinbestd.Exceptions.*;
@@ -159,7 +158,7 @@ public class User implements CollegeInterface {
         if (verifyID(id)) {
             this.id = id;
         } else {
-            throw new InvalidIdException("The ID number must be between " + MINIMUM_ID_NUMBER + " and " + MINIMUM_ID_NUMBER);
+            throw new InvalidIdException("The ID number must be between " + MINIMUM_ID_NUMBER + " and " + MAXIMUM_ID_NUMBER);
         }
     }
 
@@ -199,7 +198,7 @@ public class User implements CollegeInterface {
      * @throws webd4201.hinbestd.Exceptions.InvalidNameException
      */
     public final void setFirstName(String firstName) throws InvalidNameException {
-        if (firstName.length() == 0) {  //firstName.equals("")
+        if (firstName.length() != 0) {  //firstName.equals("")
             this.firstName = firstName;
         } else {
             throw new InvalidNameException("The first name cannot be empty");
@@ -220,7 +219,7 @@ public class User implements CollegeInterface {
      * @throws webd4201.hinbestd.Exceptions.InvalidNameException
      */
     public final void setLastName(String lastName) throws InvalidNameException {
-        if (lastName.length() == 0){
+        if (lastName.length() != 0){
             this.lastName = lastName;            
         } else {
             throw new InvalidNameException("The last name cannot be empty");
