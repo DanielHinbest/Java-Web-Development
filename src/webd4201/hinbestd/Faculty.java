@@ -158,8 +158,9 @@ public class Faculty extends User {
      * @return the user type
      */
     @Override
-    public String getTypeForDisplay() {
-        return "Faculty";
+    public String getTypeForDisplay() { //Get rid of "User"
+        String output = super.getTypeForDisplay();
+        return output.replaceAll("User", "Faculty");
     }
     
     /**

@@ -67,6 +67,7 @@ public class Student extends User {
             String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
             char type, String programCode, String programDescription, int year, Vector<Mark> marks) 
             throws InvalidIdException, InvalidPasswordException, InvalidNameException {
+        
         super(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type);
         this.setProgramCode(programCode);
         this.setProgramDescription(programDescription);
@@ -100,7 +101,7 @@ public class Student extends User {
         this.setProgramCode(programCode);
         this.setProgramDescription(programDescription);
         this.setYear(year);
-        this.setMarks(marks);
+        this.setMarks(null);
     }
     
     /**
@@ -121,7 +122,7 @@ public class Student extends User {
         this.setType(DEFAULT_TYPE);
         this.setEnabled(DEFAULT_ENABLED_STATUS);
         this.setProgramCode(DEFAULT_PROGRAM_CODE);
-        this.setProgramDescription(programDescription);
+        this.setProgramDescription(DEFAULT_PROGRAM_DESCRIPTION);
         this.setYear(DEFAULT_YEAR);
     }
     
@@ -195,34 +196,35 @@ public class Student extends User {
      */
     @Override
     public String toString() {
+        
         switch(year){
             case 1:
-                return this.getTypeForDisplay() + " User Info for:"
+                return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "st year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
 //                break;
             case 2:
-                return this.getTypeForDisplay() + " User Info for:"
+                return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "nd year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
 //                break;
             case 3:
-                return this.getTypeForDisplay() + " User Info for:"
+                return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "rd year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
 //                break;
             case 4:
-                return this.getTypeForDisplay() + " User Info for:"
+                return this.getTypeForDisplay() + " Info for:"
                         + "\n\t" + this.getFirstName() + " " + this.getLastName() + " (" + this.getId() + ")"
                         + "\n\t" + "Currently in " + this.getYear() + "th year of " + this.getProgramDescription() + " (" + this.getProgramCode() + ")"
                         + "\n\t" + "Enrolled: " + this.getEnrolDate();
 //                break;
             default:
-                return this.getTypeForDisplay() + " User Info for:"
-                        + "\n\t" + this.DEFAULT_LAST_NAME + " " + this.DEFAULT_LAST_NAME + " (" + MINIMUM_ID_NUMBER + ")"
+                return this.getTypeForDisplay() + " Info for:"
+                        + "\n\t" + this.DEFAULT_FIRST_NAME + " " + this.DEFAULT_LAST_NAME + " (" + MINIMUM_ID_NUMBER + ")"
                         + "\n\t" + "Currently in " + this.DEFAULT_YEAR + "st year of " + this.DEFAULT_PROGRAM_DESCRIPTION + " (" + this.programCode + ")"
                         + "\n\t" + "Enrolled: " + new Date();
 //                break;
