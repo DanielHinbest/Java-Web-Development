@@ -3,6 +3,7 @@ package webd4201.hinbestd;
 import java.util.Vector;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import webd4201.hinbestd.Exceptions.DuplicateException;
 import webd4201.hinbestd.Exceptions.InvalidUserDataException;
 import webd4201.hinbestd.Exceptions.NotFoundException;
 
@@ -60,7 +61,63 @@ public class StudentDA {
         }
     }
     
-    public static Student retrieve(String key) throws NotFoundException
+    public static boolean create(Student aStudent) throws DuplicateException
+    {
+        boolean inserted = false;
+        
+        id = aStudent.getId();
+        password = aStudent.getPassword();
+        firstName = aStudent.getFirstName();
+        lastName = aStudent.getLastName();
+        emailAddress = aStudent.getEmailAddress();
+        lastAccess = (Date) aStudent.getLastAccess();
+        enrolDate = (Date) aStudent.getEnrolDate();
+        enabled = aStudent.isEnabled();
+        type = aStudent.getType();
+        programCode = aStudent.getProgramCode();
+        programDescription = aStudent.getProgramDescription();
+        year = aStudent.getYear();
+//        marks = aStudent.getMarks();
+
+        try
+        {
+            retrieve(id);
+            throw (new DuplicateException("Problem with creating Student record. A student with the ID " + id + " already exists."));
+        }
+        catch (NotFoundException e)
+        {
+            try
+            {
+                PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, first_name, last_name, email_address, enabled, type, enrol_date, last_access) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                PreparedStatement psStudentInsert = aConnection.prepareStatement("INSERT INTO students (id, program_code, program_description, year) VALUES "
+                        + "(?, ?, ?, ?)");
+                
+                psUserInsert.setLong(1, id);
+                psUserInsert.setString(2, password);
+                psUserInsert.setString(3, firstName);
+                psUserInsert.setString(4, lastName);
+                psUserInsert.setString(4, emailAddress);
+                psUserInsert.setBoolean(6, enabled);
+//                psUserInsert.set                  //unsure for user type
+                psUserInsert.setDate(8, enrolDate);
+                psUserInsert.setDate(9, lastAccess);
+                psUserInsert.execute();
+                
+                psStudentInsert.setLong(1, id);
+                psStudentInsert.setString(2, programCode);
+                psStudentInsert.setString(3, programDescription);
+                psStudentInsert.setInt(4, year);
+                psStudentInsert.execute();
+            } catch (SQLException ee)
+            {
+                System.out.println(ee);
+            }
+        }
+        return inserted;
+    }
+    
+    public static Student retrieve(long key) throws NotFoundException
     {
         aStudent = null;
 
