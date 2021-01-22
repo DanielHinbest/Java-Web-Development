@@ -39,7 +39,7 @@ public class Student extends User {
     /**
      * Private instance vector set with the marks
      */
-    private Vector<Mark> marks; // Maybe ask about the vector's capacity
+    private Vector<Mark> marks;
 
     /**
      * Constructor to create a new Student with all attributes set     
