@@ -28,10 +28,10 @@ public class Lab2Tester {
 			dbStudent = new Student();
 			System.out.println("\nCreate a Student user to insert/delete later in the program, passing:\n\t" +
 					"Student student1 = new Student(" + possibleId + "L, \"password\", \"Robert\", \"McReady\"," +
-					" \"bob.mcready@dcmail.ca\", enrol, lastAccess, 's', true, \"CPA\", \"Computer Programmer Analyst\", 3);\n"); 
+					" \"bob.mcready@dcmail.ca\", enrol, lastAccess, true, 's',  \"CPA\", \"Computer Programmer Analyst\", 3);\n"); 
 			
 			mainStudent = new Student(possibleId,"password", "Robert", "McReady", "bob.mcready@dcmail.ca",
-					enrol, lastAccess, 's', true, "CPA", "Computer Programmer Analyst", 3);
+					enrol, lastAccess, true, 's',  "CPA", "Computer Programmer Analyst", 3);
 			//mainStudent.dump();
 			try{
 				

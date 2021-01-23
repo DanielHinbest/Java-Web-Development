@@ -163,6 +163,8 @@ public class StudentDA {
 
             psUserDelete.setLong(1, id);
             psStudentDelete.setLong(1, id);
+            
+            Student.retrieve(id);
 
             records = psUserDelete.executeUpdate();
             records = psUserDelete.executeUpdate();
@@ -173,9 +175,9 @@ public class StudentDA {
         }
         return records;
     }
-
+    
     public static int update(Student aStudent) throws NotFoundException {
-        int records;
+        int records = 0;
 
         id = aStudent.getId();
         password = aStudent.getPassword();
@@ -213,8 +215,8 @@ public class StudentDA {
             
             psStudentUpdate.setString(1, programCode);
             psStudentUpdate.setString(2, programDescription);
-            psStudentUpdate.setString(3, year);
-            psStudentUpdate.setInt(4, year);
+            psStudentUpdate.setInt(3, year);
+            psStudentUpdate.setLong(4, year);
             psStudentUpdate.executeUpdate();
             
         } catch (SQLException e) {
@@ -222,5 +224,6 @@ public class StudentDA {
         } catch (NotFoundException e) {
             throw new NotFoundException("Student with ID " + id + " does not exist.");
         }
+        return records;
     }
 }

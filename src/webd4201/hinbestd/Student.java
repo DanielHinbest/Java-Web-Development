@@ -3,6 +3,7 @@ package webd4201.hinbestd;
 import java.util.Date;
 import java.util.Vector;
 import webd4201.hinbestd.Exceptions.*;
+import java.sql.*;
 
 /**
  * Inherited from the User class, the Student class creates a new Student with unique attributes to go with the common attributes from User
@@ -215,6 +216,30 @@ public class Student extends User {
                         + "\n\t" + "Currently in " + this.DEFAULT_YEAR + "st year of " + this.DEFAULT_PROGRAM_DESCRIPTION + " (" + this.programCode + ")"
                         + "\n\t" + "Enrolled: " + new Date();
         }
+    }
+    
+    public static void initialize(Connection c) {
+        StudentDA.initialize(c);
+    }
+    
+    public static Student retrieve(long id) throws NotFoundException {
+        return StudentDA.retrieve(id);
+    }
+    
+    public static void terminate() {
+        StudentDA.terminate();
+    }
+    
+    public void create() throws DuplicateException {
+        StudentDA.create(this);
+    }
+    
+    public void delete() throws NotFoundException {
+        StudentDA.delete(this);
+    }
+    
+    public void update() throws NotFoundException {
+        StudentDA.update(this);
     }
     
 }
