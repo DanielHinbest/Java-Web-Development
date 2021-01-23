@@ -8,20 +8,23 @@ import webd4201.hinbestd.Exceptions.InvalidUserDataException;
 import webd4201.hinbestd.Exceptions.NotFoundException;
 
 /**
- * StudentDA - this file is contains all of the data access methods, that actually get/set data to the database. 
- * Note: that all the methods are static this is because you do not really create StudentDA objects (does not make sense)
+ * StudentDA - this file is contains all of the data access methods, that
+ * actually get/set data to the database. Note: that all the methods are static
+ * this is because you do not really create StudentDA objects (does not make
+ * sense)
+ *
  * @author Daniel Hinbest
  * @version 1.0 (21 January 2021)
  * @since 2.0
  */
 public class StudentDA {
-    
+
     private static final SimpleDateFormat SQL_DF = new SimpleDateFormat("yyyy-MM-dd");
-       
+
     static Connection aConnection;
     static Statement aStatement;
-    static Student aStudent; 
-    
+    static Student aStudent;
+
     static long id;
     static String password;
     static String firstName;
@@ -35,36 +38,76 @@ public class StudentDA {
     static String programDescription;
     static int year;
     //static Vector<Marks> marks;
-    
-    public static void initialize(Connection c)
-    {
-        try
-        {
+
+    public static void initialize(Connection c) {
+        try {
             aConnection = c;
             aStatement = aConnection.createStatement();
+        } catch (SQLException e) {
+            System.out.println(e);
         }
-        catch (SQLException e)
-        {
+    }
+
+    public static void terminate() {
+        try {
+            aStatement.close();
+        } catch (SQLException e) {
             System.out.println(e);
         }
     }
     
-    public static void terminate()
+    public static Student retrieve(long key) throws NotFoundException
     {
-        try
-        {
-            aStatement.close();
-        }
-        catch (SQLException e)
-        {
+        aStudent = null;
+        
+        try {
+            PreparedStatement psSelect = aConnection.prepareStatement("SELECT users.id, password, first_name, "
+                    + "last_name, email_address, last_access, enrol_date, enabled, type, "
+                    + "program_code, program_description, year"
+                    + "FROM users, students WHERE, users.id = students.id AND users.id = ?");
+            
+            psSelect.setLong(1, key);  // If fails, try id
+            
+            ResultSet rs = psSelect.executeQuery();
+            
+            boolean gotIt = rs.next();
+            if (gotIt)
+            {
+                id = rs.getLong("id");  // add table name if fails
+                password = rs.getString("password");
+                firstName = rs.getString("first_name");
+                lastName = rs.getString("last_name");
+                emailAddress = rs.getString("email_address");
+                lastAccess = rs.getDate("lastAccess");
+                enrolDate = rs.getDate("enrol_date");
+                enabled = rs.getBoolean("enabled");
+//                type = rs.getCharacterStream("type"); //unsure about char data type
+                programCode = rs.getString("program_code");
+                programDescription = rs.getString("program_description");
+                year = rs.getInt("year");
+//                marks = rs.getVector()                //unsure about the marks vector
+                
+                try
+                {
+                    aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type, programCode, programDescription, year);
+                } catch (InvalidUserDataException iude)
+                {
+                    System.out.println(iude.getMessage());
+                }
+            } else {
+                throw new NotFoundException("Failed to retrieve Student record. Student ID " + key + " does not exist.");
+            }
+            rs.close();
+        } catch (SQLException e) {
             System.out.println(e);
         }
+        return aStudent;
     }
     
     public static boolean create(Student aStudent) throws DuplicateException
     {
         boolean inserted = false;
-        
+
         id = aStudent.getId();
         password = aStudent.getPassword();
         firstName = aStudent.getFirstName();
@@ -79,90 +122,38 @@ public class StudentDA {
         year = aStudent.getYear();
 //        marks = aStudent.getMarks();
 
-        try
-        {
+        try {
             retrieve(id);
-            throw (new DuplicateException("Problem with creating Student record. A student with the ID " + id + " already exists."));
-        }
-        catch (NotFoundException e)
-        {
-            try
-            {
-                PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, first_name, last_name, email_address, enabled, type, enrol_date, last_access) "
+            throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
+        } catch (NotFoundException e) {
+            try {
+                PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, "
+                        + "first_name, last_name, email_address, last_access, enrol_date, enabled, type) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                PreparedStatement psStudentInsert = aConnection.prepareStatement("INSERT INTO students (id, program_code, program_description, year) VALUES "
-                        + "(?, ?, ?, ?)");
                 
                 psUserInsert.setLong(1, id);
                 psUserInsert.setString(2, password);
                 psUserInsert.setString(3, firstName);
                 psUserInsert.setString(4, lastName);
-                psUserInsert.setString(4, emailAddress);
-                psUserInsert.setBoolean(6, enabled);
-//                psUserInsert.set                  //unsure for user type
-                psUserInsert.setDate(8, enrolDate);
-                psUserInsert.setDate(9, lastAccess);
+                psUserInsert.setString(5, emailAddress);
+                psUserInsert.setDate(6, lastAccess);
+                psUserInsert.setDate(7, enrolDate);
+                psUserInsert.setBoolean(8, enabled);
+                psUserInsert.setInt(9, year);
                 psUserInsert.execute();
+                
+                PreparedStatement psStudentInsert = aConnection.prepareStatement("INSERT INTO students "
+                        + "(id, program_code, program_description, year) VALUES (?, ?, ?, ?)");
                 
                 psStudentInsert.setLong(1, id);
                 psStudentInsert.setString(2, programCode);
                 psStudentInsert.setString(3, programDescription);
                 psStudentInsert.setInt(4, year);
-                psStudentInsert.execute();
-            } catch (SQLException ee)
-            {
+                psUserInsert.execute();
+            } catch (SQLException ee) {
                 System.out.println(ee);
             }
         }
         return inserted;
-    }
-    
-    public static Student retrieve(long key) throws NotFoundException
-    {
-        aStudent = null;
-
-        String sqlQuery = "SELECT users.id, password, first_name, last_name, email_address, "
-                + "last_access, enrol_date, enabled, type, program_code, program_description, year"
-                + "FROM users, students WHERE users.id = students.id AND users.id = " + key;
-        
-        try
-        {
-            ResultSet rs = aStatement.executeQuery(sqlQuery);
-            
-            boolean gotIt = rs.next();
-            if (gotIt)
-            {
-                id = rs.getLong("users.id");
-                password = rs.getString("password");
-                firstName = rs.getString("first_name");
-                lastName = rs.getString("last_name");
-                emailAddress = rs.getString("email_address");
-                lastAccess = rs.getDate("last_access");
-                enrolDate = rs.getDate("enrol_date");
-                enabled = rs.getBoolean("enabled");
-//                type = rs.getBytes("type"); //not sure about this one
-                programCode = rs.getString("program_code");
-                programDescription = rs.getString("program_description");
-                year = rs.getInt("year");
-                
-                try
-                {
-                    aStudent = new Student(id, password, firstName, lastName, emailAddress, 
-                            lastAccess, enrolDate, enabled, 's', programCode, programDescription, year);
-                } catch (InvalidUserDataException iude)
-                {
-                    System.out.println(iude);
-                }
-            }
-            else
-            {
-                throw (new NotFoundException("Problem retreiving Student record. Student ID " + key + " does not exist"));
-            }
-            rs.close();
-        } catch (SQLException e)
-        {
-            System.out.println(e);
-        }
-        return aStudent;
     }
 }
