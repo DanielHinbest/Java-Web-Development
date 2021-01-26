@@ -63,7 +63,7 @@ public class StudentDA {
             PreparedStatement psSelect = aConnection.prepareStatement("SELECT users.id, password, first_name, "
                     + "last_name, email_address, last_access, enrol_date, enabled, type, "
                     + "program_code, program_description, year"
-                    + "FROM users, students WHERE, users.id = students.id AND users.id = ?");
+                    + "FROM users, students WHERE users.id = students.id AND users.id = ?");
 
             psSelect.setLong(1, key);  // If fails, try id
 
@@ -79,6 +79,7 @@ public class StudentDA {
                 lastAccess = rs.getDate("lastAccess");
                 enrolDate = rs.getDate("enrol_date");
                 enabled = rs.getBoolean("enabled");
+//                type = rs.getString("type").charAt(1);
 //                type = rs.getCharacterStream("type"); //unsure about char data type
                 programCode = rs.getString("program_code");
                 programDescription = rs.getString("program_description");
