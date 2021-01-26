@@ -79,12 +79,10 @@ public class StudentDA {
                 lastAccess = rs.getDate("lastAccess");
                 enrolDate = rs.getDate("enrol_date");
                 enabled = rs.getBoolean("enabled");
-//                type = rs.getString("type").charAt(1);
-//                type = rs.getCharacterStream("type"); //unsure about char data type
+                type = rs.getString("type").charAt(0);
                 programCode = rs.getString("program_code");
                 programDescription = rs.getString("program_description");
                 year = rs.getInt("year");
-//                marks = rs.getVector()                //unsure about the marks vector
 
                 try {
                     aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type, programCode, programDescription, year);
@@ -116,7 +114,6 @@ public class StudentDA {
         programCode = aStudent.getProgramCode();
         programDescription = aStudent.getProgramDescription();
         year = aStudent.getYear();
-//        marks = aStudent.getMarks();
 
         try {
             retrieve(id);
@@ -192,7 +189,6 @@ public class StudentDA {
         programCode = aStudent.getProgramCode();
         programDescription = aStudent.getProgramDescription();
         year = aStudent.getYear();
-//        marks = aStudent.getMarks();
 
         try {
             PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
