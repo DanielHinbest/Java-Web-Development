@@ -8,7 +8,7 @@ import java.sql.*;
 /**
  * Inherited from the User class, the Student class creates a new Student with unique attributes to go with the common attributes from User
  * @author Daniel Hinbest
- * @version 1.0 (2020-01-07)
+ * @version 2.0 (2020-01-07)
  * @since 1.0
  */
 public class Student extends User {
@@ -218,26 +218,51 @@ public class Student extends User {
         }
     }
     
+    /**
+     * Initializes a database connection from the student data access
+     * @param c the variable to create a connection
+     */
     public static void initialize(Connection c) {
         StudentDA.initialize(c);
     }
     
+    /**
+     * Selects a student record with the provided ID number
+     * @param id the ID number of the retrieved student record
+     * @return the result set of the selected student
+     * @throws NotFoundException thrown if no user with the set ID exists
+     */
     public static Student retrieve(long id) throws NotFoundException {
         return StudentDA.retrieve(id);
     }
     
+    /**
+     * Terminates the existing database connection
+     */
     public static void terminate() {
         StudentDA.terminate();
     }
     
+    /**
+     * Inserts a new record into the database with the provided content
+     * @throws DuplicateException thrown when a record with the provided ID already exists
+     */
     public void create() throws DuplicateException {
         StudentDA.create(this);
     }
     
+    /**
+     * Deletes an existing record from the database
+     * @throws NotFoundException thrown when no record with the ID exists
+     */
     public void delete() throws NotFoundException {
         StudentDA.delete(this);
     }
     
+    /**
+     * Updates an existing record with the provided student information
+     * @throws NotFoundException thrown when no record with the ID exists
+     */
     public void update() throws NotFoundException {
         StudentDA.update(this);
     }

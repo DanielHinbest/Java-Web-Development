@@ -19,25 +19,77 @@ import webd4201.hinbestd.Exceptions.NotFoundException;
  */
 public class StudentDA {
 
+    /**
+     * The SQL date formatting
+     */
     private static final SimpleDateFormat SQL_DF = new SimpleDateFormat("yyyy-MM-dd");
 
+    /**
+     * Attribute to create a new connection
+     */
     static Connection aConnection;
+    /**
+     * Attribute for a SQL statement
+     */
     static Statement aStatement;
+    /**
+     * Student data attribute
+     */
     static Student aStudent;
 
+    /**
+     * The student ID number
+     */
     static long id;
+    /**
+     * The student's password
+     */
     static String password;
+    /**
+     * The student's first name
+     */
     static String firstName;
+    /**
+     * The student's last name
+     */
     static String lastName;
+    /**
+     * The student's email address
+     */
     static String emailAddress;
+    /**
+     * The date the student last accessed the system
+     */
     static Date lastAccess;
+    /**
+     * The date the student enrolled
+     */
     static Date enrolDate;
+    /**
+     * Checks if the student has access to the system
+     */
     static boolean enabled;
+    /**
+     * Checks the student's user type (All students are 's')
+     */
     static char type;
+    /**
+     * The student's registered program code
+     */
     static String programCode;
+    /**
+     * The student's program name
+     */
     static String programDescription;
+    /**
+     * The student's year of study
+     */
     static int year;
 
+    /**
+     * Creates a new database connection
+     * @param c the connection variable for the database
+     */
     public static void initialize(Connection c) {
         try {
             aConnection = c;
@@ -47,6 +99,9 @@ public class StudentDA {
         }
     }
 
+    /**
+     * Closes the database connection
+     */
     public static void terminate() {
         try {
             aStatement.close();
@@ -55,6 +110,12 @@ public class StudentDA {
         }
     }
 
+    /**
+     * Retrieves the database records based on the ID number provided
+     * @param key the ID number of the student
+     * @return a student with the ID passed
+     * @throws NotFoundException thrown if there is no user with the ID provided
+     */
 //    public static Student retrieve(long key) throws NotFoundException {
 //        aStudent = null;
 //
@@ -138,6 +199,12 @@ public class StudentDA {
         return aStudent;
     }
 
+    /**
+     * Creates a new student record into the database
+     * @param aStudent the student object to be added to the database
+     * @return a boolean value to verify if the user was added successfully
+     * @throws DuplicateException thrown if a user with the same ID exists already
+     */
     public static boolean create(Student aStudent) throws DuplicateException {
         boolean inserted = false;
 
@@ -189,6 +256,12 @@ public class StudentDA {
         return inserted;
     }
 
+    /**
+     * Removes a user from the database
+     * @param aStudent the student that is being removed
+     * @return the number of existing records in the database
+     * @throws NotFoundException thrown if the user to be deleted was not found
+     */
     public static int delete(Student aStudent) throws NotFoundException {
         int records = 0;
 
@@ -213,6 +286,12 @@ public class StudentDA {
         return records;
     }
     
+    /**
+     * Updates an existing student record with the student object passed
+     * @param aStudent the updated student content
+     * @return the number of records in the database
+     * @throws NotFoundException thrown if no user with the provided content exists
+     */
     public static int update(Student aStudent) throws NotFoundException {
         int records = 0;
 
