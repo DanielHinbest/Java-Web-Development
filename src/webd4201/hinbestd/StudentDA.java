@@ -1,6 +1,7 @@
 package webd4201.hinbestd;
 
-import java.util.Vector;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import webd4201.hinbestd.Exceptions.DuplicateException;
@@ -23,7 +24,7 @@ public class StudentDA {
      * The SQL date formatting
      */
     private static final SimpleDateFormat SQL_DF = new SimpleDateFormat("yyyy-MM-dd");
-
+    
     /**
      * Attribute to create a new connection
      */
@@ -205,33 +206,40 @@ public class StudentDA {
      * @return a boolean value to verify if the user was added successfully
      * @throws DuplicateException thrown if a user with the same ID exists already
      */
-    public static boolean create(Student aStudent) throws DuplicateException {
+    public static boolean create(Student aStudent) throws DuplicateException, NoSuchAlgorithmException {
         boolean inserted = false;
-
+        
+        MessageDigest md = MessageDigest.getInstance("SHA1"); 
+        
         id = aStudent.getId();
         password = aStudent.getPassword();
         firstName = aStudent.getFirstName();
         lastName = aStudent.getLastName();
         emailAddress = aStudent.getEmailAddress();
-        lastAccess = (Date) aStudent.getLastAccess();
-        enrolDate = (Date) aStudent.getEnrolDate();
+        lastAccess = new Date(aStudent.getLastAccess().getTime());        
+        enrolDate = new Date(aStudent.getEnrolDate().getTime());
         enabled = aStudent.isEnabled();
         type = aStudent.getType();
         programCode = aStudent.getProgramCode();
         programDescription = aStudent.getProgramDescription();
-        year = aStudent.getYear();
-
+        year = aStudent.getYear();  
+        
+        
+        
         try {
             retrieve(id);
             throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
         } catch (NotFoundException e) {
             try {
+                md.update(password.getBytes());
+                byte[] passwordHash = md.digest();
+                
                 PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, "
                         + "first_name, last_name, email_address, last_access, enrol_date, enabled, type) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
                 psUserInsert.setLong(1, id);
-                psUserInsert.setString(2, password);
+                psUserInsert.setBytes(2, passwordHash);
                 psUserInsert.setString(3, firstName);
                 psUserInsert.setString(4, lastName);
                 psUserInsert.setString(5, emailAddress);
@@ -248,7 +256,7 @@ public class StudentDA {
                 psStudentInsert.setString(2, programCode);
                 psStudentInsert.setString(3, programDescription);
                 psStudentInsert.setInt(4, year);
-                psUserInsert.execute();
+                psStudentInsert.execute();
             } catch (SQLException ee) {
                 System.out.println(ee);
             }
@@ -276,7 +284,7 @@ public class StudentDA {
             
             Student.retrieve(id);
 
-            records = psUserDelete.executeUpdate();
+            records = psStudentDelete.executeUpdate();
             records = psUserDelete.executeUpdate();
         } catch (NotFoundException e) {
             throw new NotFoundException("Student with ID " + id + " does not exist.");
@@ -292,16 +300,18 @@ public class StudentDA {
      * @return the number of records in the database
      * @throws NotFoundException thrown if no user with the provided content exists
      */
-    public static int update(Student aStudent) throws NotFoundException {
+    public static int update(Student aStudent) throws NotFoundException, NoSuchAlgorithmException {
         int records = 0;
+        
+        MessageDigest md = MessageDigest.getInstance("SHA1"); 
 
         id = aStudent.getId();
         password = aStudent.getPassword();
         firstName = aStudent.getFirstName();
         lastName = aStudent.getLastName();
         emailAddress = aStudent.getEmailAddress();
-        lastAccess = (Date) aStudent.getLastAccess();
-        enrolDate = (Date) aStudent.getEnrolDate();
+        lastAccess = new Date(aStudent.getLastAccess().getTime());        
+        enrolDate = new Date(aStudent.getEnrolDate().getTime());
         enabled = aStudent.isEnabled();
         type = aStudent.getType();
         programCode = aStudent.getProgramCode();
@@ -309,6 +319,9 @@ public class StudentDA {
         year = aStudent.getYear();
 
         try {
+            md.update(password.getBytes());
+            byte[] passwordHash = md.digest();
+            
             PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
                     + "first_name = ?, last_name = ?, email_address = ?, last_access = ?, enrol_date = ?, type = ?, enabled = ?"
                     + "WHERE id = ?");
@@ -317,7 +330,7 @@ public class StudentDA {
             
             Student.retrieve(id);
             
-            psUserUpdate.setString(1, password);
+            psUserUpdate.setBytes(1, passwordHash);
             psUserUpdate.setString(2, firstName);
             psUserUpdate.setString(3, lastName);
             psUserUpdate.setString(4, emailAddress);

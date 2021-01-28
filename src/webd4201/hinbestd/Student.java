@@ -1,5 +1,6 @@
 package webd4201.hinbestd;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Vector;
 import webd4201.hinbestd.Exceptions.*;
@@ -247,7 +248,7 @@ public class Student extends User {
      * Inserts a new record into the database with the provided content
      * @throws DuplicateException thrown when a record with the provided ID already exists
      */
-    public void create() throws DuplicateException {
+    public void create() throws DuplicateException, NoSuchAlgorithmException {
         StudentDA.create(this);
     }
     
@@ -263,7 +264,7 @@ public class Student extends User {
      * Updates an existing record with the provided student information
      * @throws NotFoundException thrown when no record with the ID exists
      */
-    public void update() throws NotFoundException {
+    public void update() throws NotFoundException, NoSuchAlgorithmException {
         StudentDA.update(this);
     }
     
