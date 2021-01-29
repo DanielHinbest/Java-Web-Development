@@ -24,7 +24,7 @@ public class StudentDA {
      * The SQL date formatting
      */
     private static final SimpleDateFormat SQL_DF = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     /**
      * Attribute to create a new connection
      */
@@ -89,6 +89,7 @@ public class StudentDA {
 
     /**
      * Creates a new database connection
+     *
      * @param c the connection variable for the database
      */
     public static void initialize(Connection c) {
@@ -113,6 +114,7 @@ public class StudentDA {
 
     /**
      * Retrieves the database records based on the ID number provided
+     *
      * @param key the ID number of the student
      * @return a student with the ID passed
      * @throws NotFoundException thrown if there is no user with the ID provided
@@ -126,18 +128,18 @@ public class StudentDA {
 //                    + "program_code, program_description, year"
 //                    + "FROM users, students WHERE users.id = students.id AND users.id = ?");
 //
-//            psSelect.setLong(1, key);  // If it fails, try id
+//            psSelect.setLong(1, key); 
 //
 //            ResultSet rs = psSelect.executeQuery();
 //
 //            boolean gotIt = rs.next();
 //            if (gotIt) {
-//                id = rs.getLong("id");  // add table name if it fails
+//                id = rs.getLong("id");  
 //                password = rs.getString("password");
 //                firstName = rs.getString("first_name");
 //                lastName = rs.getString("last_name");
 //                emailAddress = rs.getString("email_address");
-//                lastAccess = rs.getDate("lastAccess");
+//                lastAccess = rs.getDate("last_access");
 //                enrolDate = rs.getDate("enrol_date");
 //                enabled = rs.getBoolean("enabled");
 //                type = rs.getString("type").charAt(0);
@@ -159,17 +161,16 @@ public class StudentDA {
 //        }
 //        return aStudent;
 //    }
-    
     public static Student retrieve(long key) throws NotFoundException {
         aStudent = null;
-        
+
         String sqlQuery = "SELECT users.id, password, first_name, last_name, email_address, "
                 + "last_access, enrol_date, enabled, type, program_code, program_description, year "
                 + "FROM users, students WHERE users.id = students.id AND users.id = " + key;
-    
+
         try {
             ResultSet rs = aStatement.executeQuery(sqlQuery);
-            
+
             boolean gotIt = rs.next();
             if (gotIt) {
                 id = rs.getLong("id");  // add table name if it fails
@@ -184,7 +185,7 @@ public class StudentDA {
                 programCode = rs.getString("program_code");
                 programDescription = rs.getString("program_description");
                 year = rs.getInt("year");
-                
+
                 try {
                     aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type, programCode, programDescription, year);
                 } catch (InvalidUserDataException iude) {
@@ -202,30 +203,32 @@ public class StudentDA {
 
     /**
      * Creates a new student record into the database
+     *
      * @param aStudent the student object to be added to the database
      * @return a boolean value to verify if the user was added successfully
-     * @throws DuplicateException thrown if a user with the same ID exists already
+     * @throws DuplicateException thrown if a user with the same ID exists
+     * already
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing
+     * algorithm doesn't exist
      */
     public static boolean create(Student aStudent) throws DuplicateException, NoSuchAlgorithmException {
         boolean inserted = false;
-        
-        MessageDigest md = MessageDigest.getInstance("SHA1"); 
-        
+
+        MessageDigest md = MessageDigest.getInstance("SHA1");
+
         id = aStudent.getId();
         password = aStudent.getPassword();
         firstName = aStudent.getFirstName();
         lastName = aStudent.getLastName();
         emailAddress = aStudent.getEmailAddress();
-        lastAccess = new Date(aStudent.getLastAccess().getTime());        
-        enrolDate = new Date(aStudent.getEnrolDate().getTime());
+        lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.Date to java.sql.Date
+        enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
         enabled = aStudent.isEnabled();
         type = aStudent.getType();
         programCode = aStudent.getProgramCode();
         programDescription = aStudent.getProgramDescription();
-        year = aStudent.getYear();  
-        
-        
-        
+        year = aStudent.getYear();
+
         try {
             retrieve(id);
             throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
@@ -233,7 +236,7 @@ public class StudentDA {
             try {
                 md.update(password.getBytes());
                 byte[] passwordHash = md.digest();
-                
+
                 PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, "
                         + "first_name, last_name, email_address, last_access, enrol_date, enabled, type) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -266,6 +269,7 @@ public class StudentDA {
 
     /**
      * Removes a user from the database
+     *
      * @param aStudent the student that is being removed
      * @return the number of existing records in the database
      * @throws NotFoundException thrown if the user to be deleted was not found
@@ -281,7 +285,7 @@ public class StudentDA {
 
             psUserDelete.setLong(1, id);
             psStudentDelete.setLong(1, id);
-            
+
             Student.retrieve(id);
 
             records = psStudentDelete.executeUpdate();
@@ -293,25 +297,29 @@ public class StudentDA {
         }
         return records;
     }
-    
+
     /**
      * Updates an existing student record with the student object passed
+     *
      * @param aStudent the updated student content
      * @return the number of records in the database
-     * @throws NotFoundException thrown if no user with the provided content exists
+     * @throws NotFoundException thrown if no user with the provided content
+     * exists
+     * @throws java.security.NoSuchAlgorithmException if the hashing algorithm
+     * doesn't exist
      */
     public static int update(Student aStudent) throws NotFoundException, NoSuchAlgorithmException {
         int records = 0;
-        
-        MessageDigest md = MessageDigest.getInstance("SHA1"); 
+
+        MessageDigest md = MessageDigest.getInstance("SHA1");
 
         id = aStudent.getId();
         password = aStudent.getPassword();
         firstName = aStudent.getFirstName();
         lastName = aStudent.getLastName();
         emailAddress = aStudent.getEmailAddress();
-        lastAccess = new Date(aStudent.getLastAccess().getTime());        
-        enrolDate = new Date(aStudent.getEnrolDate().getTime());
+        lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.date to java.sql.Date
+        enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
         enabled = aStudent.isEnabled();
         type = aStudent.getType();
         programCode = aStudent.getProgramCode();
@@ -321,32 +329,32 @@ public class StudentDA {
         try {
             md.update(password.getBytes());
             byte[] passwordHash = md.digest();
-            
+
             PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
                     + "first_name = ?, last_name = ?, email_address = ?, last_access = ?, enrol_date = ?, type = ?, enabled = ?"
                     + "WHERE id = ?");
             PreparedStatement psStudentUpdate = aConnection.prepareStatement("UPDATE students SET program_code = ?, program_description = ?, year = ?"
                     + "WHERE id = ?");
-            
+
             Student.retrieve(id);
-            
+
             psUserUpdate.setBytes(1, passwordHash);
             psUserUpdate.setString(2, firstName);
             psUserUpdate.setString(3, lastName);
             psUserUpdate.setString(4, emailAddress);
             psUserUpdate.setDate(5, lastAccess);
             psUserUpdate.setDate(6, enrolDate);
-            psUserUpdate.setString(7, String.valueOf(type));
+            psUserUpdate.setString(7, String.valueOf(type));    // Converts char to String
             psUserUpdate.setBoolean(8, enabled);
             psUserUpdate.setLong(9, id);
             psUserUpdate.executeUpdate();
-            
+
             psStudentUpdate.setString(1, programCode);
             psStudentUpdate.setString(2, programDescription);
             psStudentUpdate.setInt(3, year);
             psStudentUpdate.setLong(4, year);
             psStudentUpdate.executeUpdate();
-            
+
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NotFoundException e) {

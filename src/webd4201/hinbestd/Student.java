@@ -247,6 +247,7 @@ public class Student extends User {
     /**
      * Inserts a new record into the database with the provided content
      * @throws DuplicateException thrown when a record with the provided ID already exists
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
      */
     public void create() throws DuplicateException, NoSuchAlgorithmException {
         StudentDA.create(this);
@@ -263,6 +264,7 @@ public class Student extends User {
     /**
      * Updates an existing record with the provided student information
      * @throws NotFoundException thrown when no record with the ID exists
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
      */
     public void update() throws NotFoundException, NoSuchAlgorithmException {
         StudentDA.update(this);
