@@ -30,7 +30,7 @@ public class User implements CollegeInterface {
     /**
      * The class constant for the maximum password length
      */
-    public static final byte MAXIMUM_PASSWORD_LENGTH = 50;
+    public static final byte MAXIMUM_PASSWORD_LENGTH = 40;
     /**
      * The class constant for the default first name
      */
@@ -164,6 +164,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's password
+     *
      * @return the password
      */
     public String getPassword() {
@@ -172,20 +173,21 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's password
+     *
      * @param password the user's password input
      * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException
      */
     public final void setPassword(String password) throws InvalidPasswordException {
         if (password.length() >= MINIMUM_PASSWORD_LENGTH && password.length() <= MAXIMUM_PASSWORD_LENGTH) {
             this.password = password;
-        }
-        else {
-            throw new InvalidPasswordException("The password length must be between "  + MINIMUM_PASSWORD_LENGTH + " and " + MAXIMUM_PASSWORD_LENGTH);
+        } else {
+            throw new InvalidPasswordException("The password length must be between " + MINIMUM_PASSWORD_LENGTH + " and " + MAXIMUM_PASSWORD_LENGTH);
         }
     }
 
     /**
      * Returns the user's first name
+     *
      * @return the first name
      */
     public String getFirstName() {
@@ -194,6 +196,7 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's first name
+     *
      * @param firstName the user's first name
      * @throws webd4201.hinbestd.Exceptions.InvalidNameException
      */
@@ -207,6 +210,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's last name
+     *
      * @return the last name
      */
     public String getLastName() {
@@ -215,12 +219,13 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's last name
+     *
      * @param lastName the user's last name
      * @throws webd4201.hinbestd.Exceptions.InvalidNameException
      */
     public final void setLastName(String lastName) throws InvalidNameException {
-        if (lastName.length() != 0){
-            this.lastName = lastName;            
+        if (lastName.length() != 0) {
+            this.lastName = lastName;
         } else {
             throw new InvalidNameException("The last name cannot be empty");
         }
@@ -228,6 +233,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's email address
+     *
      * @return email address
      */
     public String getEmailAddress() {
@@ -236,14 +242,16 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's email address
+     *
      * @param emailAddress the user's email address
      */
     public final void setEmailAddress(String emailAddress) {
-            this.emailAddress = emailAddress;         
+        this.emailAddress = emailAddress;
     }
 
     /**
      * Returns the user's last access date
+     *
      * @return last access date
      */
     public Date getLastAccess() {
@@ -252,6 +260,7 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's last access date
+     *
      * @param lastAccess the last date the user signed in
      */
     public final void setLastAccess(Date lastAccess) {
@@ -260,6 +269,7 @@ public class User implements CollegeInterface {
 
     /**
      * Gets the user's enrollment date
+     *
      * @return the enrollment date
      */
     public Date getEnrolDate() {
@@ -268,6 +278,7 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's enrollment date
+     *
      * @param enrolDate the date the user enrolled
      */
     public final void setEnrolDate(Date enrolDate) {
@@ -276,6 +287,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user's enabled status
+     *
      * @return the enabled status
      */
     public boolean isEnabled() {
@@ -284,6 +296,7 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user's enabled status
+     *
      * @param enabled the user accessibility
      */
     public final void setEnabled(boolean enabled) {
@@ -292,6 +305,7 @@ public class User implements CollegeInterface {
 
     /**
      * Returns the user type
+     *
      * @return the user type
      */
     public char getType() {
@@ -300,6 +314,7 @@ public class User implements CollegeInterface {
 
     /**
      * Sets the user type
+     *
      * @param type the user type (Student or faculty)
      */
     public final void setType(char type) {
@@ -308,6 +323,7 @@ public class User implements CollegeInterface {
 
     /**
      * Base class function for returning the user type for the display
+     *
      * @return the user type
      */
     @Override
@@ -317,6 +333,7 @@ public class User implements CollegeInterface {
 
     /**
      * Converts the user information into a string to output to the screen
+     *
      * @return the User content as a String
      */
     @Override
@@ -337,6 +354,7 @@ public class User implements CollegeInterface {
     /**
      * Checks for a valid ID entry and returns true if the ID is valid, and
      * false if invalid
+     *
      * @param id the user's ID number
      * @return the validity status
      */
@@ -347,4 +365,19 @@ public class User implements CollegeInterface {
             return true;
         }
     }
+
+    public static String decToHex(byte[] bytes) {
+        String hex = "";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            //System.out.println(bytes[i] + " as hex is " 
+//				+ Integer.toHexString(bytes[i]));
+            //System.out.println(bytes[i] + " as 2-digit hex is " 
+//				+ String.format("%02x", bytes[i]));
+            sb.append(String.format("%02x", bytes[i]));
+        }
+        hex = sb.toString();
+        return hex;
+    }
+
 }

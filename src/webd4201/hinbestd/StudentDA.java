@@ -1,6 +1,5 @@
 package webd4201.hinbestd;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -174,8 +173,6 @@ public class StudentDA {
      */
     public static boolean create(Student aStudent) throws DuplicateException, NoSuchAlgorithmException {
         boolean inserted = false;
-        
-        MessageDigest md = MessageDigest.getInstance("SHA1");
 
         id = aStudent.getId();
         password = aStudent.getPassword();
@@ -195,15 +192,13 @@ public class StudentDA {
             throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
         } catch (NotFoundException e) {
             try {
-                md.update(password.getBytes());
-                byte[] passwordHash = md.digest();
 
                 PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, "
                         + "first_name, last_name, email_address, last_access, enrol_date, enabled, type) "
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
                 psUserInsert.setLong(1, id);
-                psUserInsert.setBytes(2, passwordHash);
+                psUserInsert.setString(2, password);
                 psUserInsert.setString(3, firstName);
                 psUserInsert.setString(4, lastName);
                 psUserInsert.setString(5, emailAddress);
@@ -272,8 +267,6 @@ public class StudentDA {
     public static int update(Student aStudent) throws NotFoundException, NoSuchAlgorithmException {
         int records = 0;
 
-        MessageDigest md = MessageDigest.getInstance("SHA1");
-
         id = aStudent.getId();
         password = aStudent.getPassword();
         firstName = aStudent.getFirstName();
@@ -288,8 +281,6 @@ public class StudentDA {
         year = aStudent.getYear();
 
         try {
-            md.update(password.getBytes());
-            byte[] passwordHash = md.digest();
 
             PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
                     + "first_name = ?, last_name = ?, email_address = ?, last_access = ?, enrol_date = ?, type = ?, enabled = ?"
@@ -299,7 +290,7 @@ public class StudentDA {
 
             Student.retrieve(id);
 
-            psUserUpdate.setBytes(1, passwordHash);
+            psUserUpdate.setString(1, password);
             psUserUpdate.setString(2, firstName);
             psUserUpdate.setString(3, lastName);
             psUserUpdate.setString(4, emailAddress);

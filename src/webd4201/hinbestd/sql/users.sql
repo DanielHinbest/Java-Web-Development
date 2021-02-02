@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS users;
 -- Creates a new users table
 CREATE TABLE users (
 	id BIGINT PRIMARY KEY,
-	password VARCHAR(50) NOT NULL,
+	password VARCHAR(40) NOT NULL,
 	first_name VARCHAR(35) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
 	email_address VARCHAR(255) NOT NULL,
