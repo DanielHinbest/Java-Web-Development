@@ -119,61 +119,22 @@ public class StudentDA {
      * @return a student with the ID passed
      * @throws NotFoundException thrown if there is no user with the ID provided
      */
-//    public static Student retrieve(long key) throws NotFoundException {
-//        aStudent = null;
-//
-//        try {
-//            PreparedStatement psSelect = aConnection.prepareStatement("SELECT users.id, password, first_name, "
-//                    + "last_name, email_address, last_access, enrol_date, enabled, type, "
-//                    + "program_code, program_description, year"
-//                    + "FROM users, students WHERE users.id = students.id AND users.id = ?");
-//
-//            psSelect.setLong(1, key); 
-//
-//            ResultSet rs = psSelect.executeQuery();
-//
-//            boolean gotIt = rs.next();
-//            if (gotIt) {
-//                id = rs.getLong("id");  
-//                password = rs.getString("password");
-//                firstName = rs.getString("first_name");
-//                lastName = rs.getString("last_name");
-//                emailAddress = rs.getString("email_address");
-//                lastAccess = rs.getDate("last_access");
-//                enrolDate = rs.getDate("enrol_date");
-//                enabled = rs.getBoolean("enabled");
-//                type = rs.getString("type").charAt(0);
-//                programCode = rs.getString("program_code");
-//                programDescription = rs.getString("program_description");
-//                year = rs.getInt("year");
-//
-//                try {
-//                    aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type, programCode, programDescription, year);
-//                } catch (InvalidUserDataException iude) {
-//                    System.out.println(iude.getMessage());
-//                }
-//            } else {
-//                throw new NotFoundException("Failed to retrieve Student record. Student ID " + key + " does not exist.");
-//            }
-//            rs.close();
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        }
-//        return aStudent;
-//    }
     public static Student retrieve(long key) throws NotFoundException {
         aStudent = null;
 
-        String sqlQuery = "SELECT users.id, password, first_name, last_name, email_address, "
-                + "last_access, enrol_date, enabled, type, program_code, program_description, year "
-                + "FROM users, students WHERE users.id = students.id AND users.id = " + key;
-
         try {
-            ResultSet rs = aStatement.executeQuery(sqlQuery);
+            PreparedStatement psSelect = aConnection.prepareStatement("SELECT users.id, password, first_name, "
+                    + "last_name, email_address, last_access, enrol_date, enabled, type, "
+                    + "program_code, program_description, year "
+                    + "FROM users, students WHERE users.id = students.id AND users.id = ?");
+
+            psSelect.setLong(1, key); 
+
+            ResultSet rs = psSelect.executeQuery();
 
             boolean gotIt = rs.next();
             if (gotIt) {
-                id = rs.getLong("id");  // add table name if it fails
+                id = rs.getLong("id");  
                 password = rs.getString("password");
                 firstName = rs.getString("first_name");
                 lastName = rs.getString("last_name");
@@ -213,7 +174,7 @@ public class StudentDA {
      */
     public static boolean create(Student aStudent) throws DuplicateException, NoSuchAlgorithmException {
         boolean inserted = false;
-
+        
         MessageDigest md = MessageDigest.getInstance("SHA1");
 
         id = aStudent.getId();

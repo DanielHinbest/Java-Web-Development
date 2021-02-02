@@ -96,7 +96,7 @@ public class Student extends User {
             String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
             char type, String programCode, String programDescription, int year ) 
             throws InvalidUserDataException {
-        this(id, password, firstName, lastName, emailAddress, enrolDate, lastAccess, enabled, type, programCode, programDescription, year, null);
+        this(id, password, firstName, lastName, emailAddress, enrolDate, lastAccess, enabled, type, programCode, programDescription, year, new Vector<Mark>());
     }
     
     /**
