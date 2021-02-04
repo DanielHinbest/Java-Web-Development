@@ -14,7 +14,7 @@ import webd4201.hinbestd.Exceptions.NotFoundException;
  * sense)
  *
  * @author Daniel Hinbest
- * @version 1.0 (21 January 2021)
+ * @version 1.0 (4 February 2021)
  * @since 2.0
  */
 public class StudentDA {
@@ -205,7 +205,7 @@ public class StudentDA {
                 psUserInsert.setDate(6, lastAccess);
                 psUserInsert.setDate(7, enrolDate);
                 psUserInsert.setBoolean(8, enabled);
-                psUserInsert.setInt(9, year);
+                psUserInsert.setString(9, String.valueOf(type));
                 psUserInsert.execute();
 
                 PreparedStatement psStudentInsert = aConnection.prepareStatement("INSERT INTO students "
@@ -304,7 +304,7 @@ public class StudentDA {
             psStudentUpdate.setString(1, programCode);
             psStudentUpdate.setString(2, programDescription);
             psStudentUpdate.setInt(3, year);
-            psStudentUpdate.setLong(4, year);
+            psStudentUpdate.setLong(4, id);
             psStudentUpdate.executeUpdate();
 
         } catch (SQLException e) {

@@ -9,7 +9,7 @@ import java.sql.*;
 /**
  * Inherited from the User class, the Student class creates a new Student with unique attributes to go with the common attributes from User
  * @author Daniel Hinbest
- * @version 2.0 (2020-01-07)
+ * @version 2.0 (2021-02-04)
  * @since 1.0
  */
 public class Student extends User {
@@ -58,7 +58,7 @@ public class Student extends User {
      * @param programDescription the name of the program
      * @param year the student's current year of study
      * @param marks a vector of the student's marks
-     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when user data is invalid
      */
     public Student(long id, String password, String firstName, String lastName, 
             String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
@@ -90,7 +90,7 @@ public class Student extends User {
      * @param programCode the program's 3-4 digit code
      * @param programDescription the name of the program
      * @param year the student's current year of study
-     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException 
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when user data is invalid
      */
     public Student(long id, String password, String firstName, String lastName, 
             String emailAddress,  Date enrolDate, Date lastAccess, boolean enabled, 
@@ -101,7 +101,7 @@ public class Student extends User {
     
     /**
      * Default constructor to create a new Student with all default values
-     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when user data is invalid
      */
     public Student() throws InvalidUserDataException{
         this(DEFAULT_ID, DEFAULT_PASSWORD, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, 

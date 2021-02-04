@@ -79,7 +79,6 @@ public class Lab2Tester {
 	            	mainStudent.setPassword("newpassword");
 	            	mainStudent.setProgramCode("RPN");
 	            	mainStudent.setProgramDescription("Registered Practical Nurse");
-                        System.out.println(mainStudent.getPassword());
 	            	
 	            	mainStudent.update();
 	                System.out.println("Student record updated in the database.\n");

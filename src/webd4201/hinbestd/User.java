@@ -12,7 +12,7 @@ import webd4201.hinbestd.Exceptions.*;
  * super class for different types of users (Faculty, Students)
  *
  * @author Daniel Hinbest
- * @version 1.0 (2020-01-07)
+ * @version 2.0 (2021-02-04)
  * @since 1.0
  */
 public class User implements CollegeInterface {
@@ -112,7 +112,7 @@ public class User implements CollegeInterface {
      * @param enrolDate The date the user enrolled
      * @param enabled Sets the user's accessibility
      * @param type The user type (Student or Faculty)
-     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when user data is invalid
      */
     public User(long id, String password, String firstName, String lastName, String emailAddress,
             Date lastAccess, Date enrolDate, boolean enabled, char type) throws InvalidUserDataException {
@@ -135,7 +135,7 @@ public class User implements CollegeInterface {
      * Default constructor - creates a new instance of the User class with the
      * default values from the constants
      *
-     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when user data is invalid
      */
     public User() throws InvalidUserDataException {
         this(DEFAULT_ID, DEFAULT_PASSWORD, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL_ADDRESS, new Date(), new Date(), DEFAULT_ENABLED_STATUS, DEFAULT_TYPE);
@@ -154,7 +154,7 @@ public class User implements CollegeInterface {
      * Sets the user ID
      *
      * @param id The user's ID number
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException thrown when an ID is invalid
      */
     public final void setId(long id) throws InvalidIdException {
         if (verifyID(id)) {
@@ -177,8 +177,8 @@ public class User implements CollegeInterface {
      * Sets the user's password
      *
      * @param password the user's password input
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException
-     * @throws java.security.NoSuchAlgorithmException
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException thrown when a password is invalid
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
      */
     public final void setPassword(String password) throws InvalidPasswordException, NoSuchAlgorithmException {
         if (password.length() >= MINIMUM_PASSWORD_LENGTH && password.length() <= MAXIMUM_PASSWORD_LENGTH) {
@@ -201,7 +201,7 @@ public class User implements CollegeInterface {
      * Sets the user's first name
      *
      * @param firstName the user's first name
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException thrown when a name is invalid
      */
     public final void setFirstName(String firstName) throws InvalidNameException {
         if (firstName.length() != 0) {  //firstName.equals("")
@@ -224,7 +224,7 @@ public class User implements CollegeInterface {
      * Sets the user's last name
      *
      * @param lastName the user's last name
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException thrown when a name is invalid
      */
     public final void setLastName(String lastName) throws InvalidNameException {
         if (lastName.length() != 0) {
