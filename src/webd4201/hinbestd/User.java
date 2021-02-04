@@ -1,5 +1,7 @@
 package webd4201.hinbestd;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -176,10 +178,11 @@ public class User implements CollegeInterface {
      *
      * @param password the user's password input
      * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException
+     * @throws java.security.NoSuchAlgorithmException
      */
-    public final void setPassword(String password) throws InvalidPasswordException {
+    public final void setPassword(String password) throws InvalidPasswordException, NoSuchAlgorithmException {
         if (password.length() >= MINIMUM_PASSWORD_LENGTH && password.length() <= MAXIMUM_PASSWORD_LENGTH) {
-            this.password = password;
+            this.password = hashPassword(password);
         } else {
             throw new InvalidPasswordException("The password length must be between " + MINIMUM_PASSWORD_LENGTH + " and " + MAXIMUM_PASSWORD_LENGTH);
         }
@@ -366,6 +369,11 @@ public class User implements CollegeInterface {
         }
     }
 
+    /**
+     * Converts the hashed string to a hexadecimal value
+     * @param bytes the bytes to be converted
+     * @return the hex string of the bytes
+     */
     public static String decToHex(byte[] bytes) {
         String hex = "";
         StringBuilder sb = new StringBuilder();
@@ -378,6 +386,19 @@ public class User implements CollegeInterface {
         }
         hex = sb.toString();
         return hex;
+    }
+    
+    /**
+     * Hashes the password into SHA1
+     * @param thingToBeHashed the value that is being hashed
+     * @return the hashed string
+     * @throws NoSuchAlgorithmException if a hashing algorithm doesn't exist
+     */
+    public static String hashPassword(String thingToBeHashed) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA1");
+        md.update(thingToBeHashed.getBytes());
+        byte[] bytesofHashedString = md.digest();
+        return decToHex(bytesofHashedString);
     }
 
 }
