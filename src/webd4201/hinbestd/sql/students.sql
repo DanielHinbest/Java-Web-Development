@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS students;
 -- Creates a students table
 CREATE TABLE students (
 	id BIGINT PRIMARY KEY REFERENCES users(id),
-	program_code CHAR(5) NOT NULL,
+	program_code CHAR(4) NOT NULL,
 	program_description VARCHAR(70) NOT NULL,
 	year INT NOT NULL
 );

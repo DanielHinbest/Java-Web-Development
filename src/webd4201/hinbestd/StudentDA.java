@@ -127,13 +127,13 @@ public class StudentDA {
                     + "program_code, program_description, year "
                     + "FROM users, students WHERE users.id = students.id AND users.id = ?");
 
-            psSelect.setLong(1, key); 
+            psSelect.setLong(1, key);
 
             ResultSet rs = psSelect.executeQuery();
 
             boolean gotIt = rs.next();
             if (gotIt) {
-                id = rs.getLong("id");  
+                id = rs.getLong("id");
                 password = rs.getString("password");
                 firstName = rs.getString("first_name");
                 lastName = rs.getString("last_name");
@@ -267,19 +267,6 @@ public class StudentDA {
     public static int update(Student aStudent) throws NotFoundException, NoSuchAlgorithmException {
         int records = 0;
 
-        id = aStudent.getId();
-        password = aStudent.getPassword();
-        firstName = aStudent.getFirstName();
-        lastName = aStudent.getLastName();
-        emailAddress = aStudent.getEmailAddress();
-        lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.date to java.sql.Date
-        enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
-        enabled = aStudent.isEnabled();
-        type = aStudent.getType();
-        programCode = aStudent.getProgramCode();
-        programDescription = aStudent.getProgramDescription();
-        year = aStudent.getYear();
-
         try {
 
             PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
@@ -287,9 +274,22 @@ public class StudentDA {
                     + "WHERE id = ?");
             PreparedStatement psStudentUpdate = aConnection.prepareStatement("UPDATE students SET program_code = ?, program_description = ?, year = ?"
                     + "WHERE id = ?");
-
+            
             Student.retrieve(id);
-
+            
+            id = aStudent.getId();
+            password = aStudent.getPassword();
+            firstName = aStudent.getFirstName();
+            lastName = aStudent.getLastName();
+            emailAddress = aStudent.getEmailAddress();
+            lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.date to java.sql.Date
+            enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
+            enabled = aStudent.isEnabled();
+            type = aStudent.getType();
+            programCode = aStudent.getProgramCode();
+            programDescription = aStudent.getProgramDescription();
+            year = aStudent.getYear();
+            
             psUserUpdate.setString(1, password);
             psUserUpdate.setString(2, firstName);
             psUserUpdate.setString(3, lastName);

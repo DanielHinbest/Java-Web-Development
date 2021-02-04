@@ -6,12 +6,13 @@ package webd4201.hinbestd;  //change this to make the class part of your package
  * @version 1.0 (Janaury 8th, 2019)
  * @since 1.0
  */
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import webd4201.hinbestd.Exceptions.*;
 
 public class Lab1Tester {
 
-	public static void main(String[] args) throws InvalidIdException, InvalidPasswordException, InvalidNameException {
+	public static void main(String[] args) throws InvalidIdException, InvalidPasswordException, InvalidNameException, NoSuchAlgorithmException {
 		
 		System.out.println("******************** Deliverable 1 Output ********************\n");
 		

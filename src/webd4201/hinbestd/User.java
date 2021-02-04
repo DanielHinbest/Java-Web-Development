@@ -378,10 +378,8 @@ public class User implements CollegeInterface {
         String hex = "";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
-            //System.out.println(bytes[i] + " as hex is " 
-//				+ Integer.toHexString(bytes[i]));
-            //System.out.println(bytes[i] + " as 2-digit hex is " 
-//				+ String.format("%02x", bytes[i]));
+            //System.out.println(bytes[i] + " as hex is " + Integer.toHexString(bytes[i]));
+            //System.out.println(bytes[i] + " as 2-digit hex is " + String.format("%02x", bytes[i]));
             sb.append(String.format("%02x", bytes[i]));
         }
         hex = sb.toString();

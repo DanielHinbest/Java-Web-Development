@@ -97,3 +97,6 @@ INSERT INTO users VALUES (
 );
 
 SELECT * FROM users;
+
+DELETE FROM students WHERE id = '100111111';
+DELETE FROM users WHERE id = '100111111';
