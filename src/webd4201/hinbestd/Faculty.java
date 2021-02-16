@@ -1,12 +1,14 @@
 package webd4201.hinbestd;
 
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.util.Date;
 import webd4201.hinbestd.Exceptions.*;
 
 /**
  * This class inherits from User to create a new faculty member with the necessary information
  * @author Daniel Hinbest
- * @version 1.0 (2021-01-07)
+ * @version 2.0 (2021-02-16)
  * @since 1.0
  */
 public class Faculty extends User {
@@ -174,5 +176,51 @@ public class Faculty extends User {
                 + "\n\t" + this.getSchoolDescription() + " (" + this.getSchoolCode() + ")"
                 + "\n\tOffice: " + this.getOffice()
                 + "\n\t" + PHONE_NUMBER + " x" + this.getExtension();
+    }
+    
+    /**
+     * Initializes a database connection from the faculty data access
+     * @param c the variable to create a connection
+     */
+    public static void initialize(Connection c) {
+        FacultyDA.initialize(c);
+    }
+    
+    /**
+     * Selects a faculty record with the provided ID number
+     * @param id the ID number of the retrieved faculty record
+     * @return the result set of the selected faculty
+     * @throws NotFoundException thrown if no user with the set ID exists
+     */
+     public static Faculty retrieve(long id) throws NotFoundException {
+        return FacultyDA.retrieve(id);
+    }
+    
+    /**
+     * Terminates the existing database connection
+     */
+    public static void terminate() {
+        FacultyDA.terminate();
+    }
+    
+    /**
+     * Inserts a new record into the database with the provided content
+     * @throws DuplicateException thrown when a record with the provided ID already exists
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
+     */
+    public void create() throws DuplicateException, NoSuchAlgorithmException {
+        FacultyDA.create(this);
+    }
+    
+    /**
+     * Deletes an existing record from the database
+     * @throws NotFoundException thrown when no record with the ID exists
+     */
+    public void delete() throws NotFoundException {
+        FacultyDA.delete(this);
+    }
+    
+    public void update() throws NotFoundException, NoSuchAlgorithmException {
+        FacultyDA.update(this);
     }
 }
