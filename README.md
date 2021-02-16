@@ -9,4 +9,5 @@ The next lab/deliverable is: Deliverable 3 - JSP Web Pages
 
 Completed deliverables are: <br>
 Deliverable #1 - Java/OOP Review <br>
-Deliverable #2 - JDBC/Web Security
+Deliverable #2 - JDBC/Web Security<br>
+Term Test #1 - Java/JDBC
