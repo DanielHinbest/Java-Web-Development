@@ -5,7 +5,7 @@ The concept for this project is to develop a college database system where stude
 
 This project was developed in Apache NetBeans IDE 12.2 on JDK 15
 
-The next lab/deliverable is: Deliverable 3 - JSP Web Pages
+The current deliverable is: Deliverable 3 - JSP Web Pages
 
 Completed deliverables are: <br>
 Deliverable #1 - Java/OOP Review <br>
