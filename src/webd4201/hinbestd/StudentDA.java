@@ -14,7 +14,7 @@ import webd4201.hinbestd.Exceptions.NotFoundException;
  * sense)
  *
  * @author Daniel Hinbest
- * @version 1.0 (4 February 2021)
+ * @version 2.0 (1 March 2021)
  * @since 2.0
  */
 public class StudentDA {
@@ -313,5 +313,77 @@ public class StudentDA {
             throw new NotFoundException("Student with ID " + id + " does not exist.");
         }
         return records;
+    }
+    
+    /**
+     * Authenticates the user from the database if the id/password combination exists
+     * @param id The student ID
+     * @param password the student's password
+     * @return The student details
+     * @throws NotFoundException thrown when a student does not exist
+     */
+    public static Student authenticate(long id, String password) throws NotFoundException {
+        aStudent = null;
+        
+        try {
+            PreparedStatement psAuthenticate = aConnection.prepareStatement("SELECT * FROM users, students "
+                                                                            + "WHERE users.id = ? AND password = ?");
+            
+            psAuthenticate.setLong(1, id);
+            psAuthenticate.setString(2, password);
+            
+            ResultSet rs = psAuthenticate.executeQuery();
+            
+            boolean gotIt = rs.next();
+            
+            if (gotIt) {
+                id = rs.getLong("id");
+                password = rs.getString("password");
+                firstName = rs.getString("first_name");
+                lastName = rs.getString("last_name");
+                emailAddress = rs.getString("email_address");
+                lastAccess = rs.getDate("last_access");
+                enrolDate = rs.getDate("enrol_date");
+                enabled = rs.getBoolean("enabled");
+                type = rs.getString("type").charAt(0);
+                programCode = rs.getString("program_code");
+                programDescription = rs.getString("program_description");
+                year = rs.getInt("year");
+                
+                try {
+                    aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type, programCode, programDescription, year);
+                    
+                } catch (InvalidUserDataException iude) {
+                    System.out.println(iude.getMessage());
+                }
+                
+            } else {
+                throw new NotFoundException("Not Found");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
+        return aStudent;
+    }
+    
+    public static boolean isExistingLogin(long id, String password) {
+        
+        boolean exists = true;
+        
+        try {
+            PreparedStatement psLogin = aConnection.prepareStatement("SELECT * FROM users, students "
+                                                                    + "WHERE users.id = ? AND users.password = ?");
+            
+            psLogin.setLong(1, id);
+            psLogin.setString(2, password);
+            
+            ResultSet rs = psLogin.executeQuery();
+            
+            exists = rs.next();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return exists;
     }
 }

@@ -26,7 +26,7 @@ CREATE TABLE users (
 -- Inserts records into the users table
 INSERT INTO users VALUES (
 	100717231,
-	ENCODE(DIGEST('pass123', 'sha1'), 'hex'),
+	ENCODE(DIGEST('pass1234', 'sha1'), 'hex'),
 	'Daniel',
 	'Hinbest',
 	'daniel.hinbest@rogers.com',
@@ -50,7 +50,7 @@ INSERT INTO users VALUES (
 
 INSERT INTO users VALUES (
 	100843928,
-	ENCODE(DIGEST('abc123', 'sha1'), 'hex'),
+	ENCODE(DIGEST('abcd1234', 'sha1'), 'hex'),
 	'Vladimir',
 	'Guerrero Jr.',
 	'vladimir.guerrerojr@dcmail.ca',
@@ -62,7 +62,7 @@ INSERT INTO users VALUES (
 
 INSERT INTO users VALUES (
 	100743832,
-	ENCODE(DIGEST('faculty', 'sha1'), 'hex'),
+	ENCODE(DIGEST('faculty1', 'sha1'), 'hex'),
 	'Bo',
 	'Bichette',
 	'bo.bichette@durhamcollege.ca',
@@ -86,7 +86,7 @@ INSERT INTO users VALUES (
 
 INSERT INTO users VALUES (
 	100329873,
-	ENCODE(DIGEST('qwerty', 'sha1'), 'hex'),
+	ENCODE(DIGEST('qwertyui', 'sha1'), 'hex'),
 	'Hyun-Jin',
 	'Ryu',
 	'hyunjin.ryu@durhamcollege.ca',
@@ -97,6 +97,3 @@ INSERT INTO users VALUES (
 );
 
 SELECT * FROM users;
-
-DELETE FROM students WHERE id = '100111111';
-DELETE FROM users WHERE id = '100111111';

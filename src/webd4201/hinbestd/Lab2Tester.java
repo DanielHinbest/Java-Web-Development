@@ -96,6 +96,7 @@ public class Lab2Tester {
    						+ "(Id: " + mainStudent.getId() + ")");
 	        	   		mainStudent.delete();
 	        	   	System.out.println("Student record with id " + mainStudent.getId() + " successfully removed from the database.\n");
+                                
 	            }
 	            catch(NotFoundException e)
 	                    {	System.out.println(e);}

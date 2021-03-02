@@ -270,4 +270,25 @@ public class Student extends User {
         StudentDA.update(this);
     }
     
+    /**
+     * 
+     * @param id
+     * @param password
+     * @return
+     * @throws NotFoundException 
+     */
+    public static Student authenticate(long id, String password) throws NotFoundException {
+        return StudentDA.authenticate(id, password);
+    }
+    
+    /**
+     * 
+     * @param id
+     * @param password
+     * @return 
+     */
+    public static boolean isExistingLogin(long id, String password) {
+        return StudentDA.isExistingLogin(id, password);
+    }
+    
 }
