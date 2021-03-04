@@ -201,7 +201,7 @@ public class FacultyDA {
                         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 
                 psUserInsert.setLong(1, id);
-                psUserInsert.setString(2, password);
+                psUserInsert.setString(2, User.hashPassword(password));
                 psUserInsert.setString(3, firstName);
                 psUserInsert.setString(4, lastName);
                 psUserInsert.setString(5, emailAddress);
@@ -295,7 +295,7 @@ public class FacultyDA {
             office = aFaculty.getOffice();
             extension = aFaculty.getExtension();
             
-            psUserUpdate.setString(1, password);
+            psUserUpdate.setString(1, User.hashPassword(password));
             psUserUpdate.setString(2, firstName);
             psUserUpdate.setString(3, lastName);
             psUserUpdate.setString(4, emailAddress);
