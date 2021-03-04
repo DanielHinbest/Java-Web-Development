@@ -5,6 +5,8 @@ The concept for this project is to develop a college database system where stude
 
 This project was developed in Apache NetBeans IDE 12.2 on JDK 15
 
+The hinbestd folder provides all the files for Tomcat
+
 The current deliverable is: Deliverable 3 - JSP Web Pages
 
 Completed deliverables are: <br>
