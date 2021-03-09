@@ -29,7 +29,7 @@ INSERT INTO users VALUES (
 	ENCODE(DIGEST('pass1234', 'sha1'), 'hex'),
 	'Daniel',
 	'Hinbest',
-	'daniel.hinbest@dcmail.ca',
+	'daniel.hinbest@rogers.com',
 	true,
 	's',
 	NOW(),
