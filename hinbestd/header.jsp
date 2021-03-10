@@ -22,14 +22,13 @@
             <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="index.jsp">Durham College</a>
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
-                    <!-- Sessions needed here -->
                     <%
-                        Student loggedInStudent = (Student)session.getAttribute("aStudent");
+                        Student loggedInStudent = (Student)session.getAttribute("student");
                         if (loggedInStudent == null) {
-                            out.println("<a class=nav-link href=\"login.jsp\" name=\"signout\">Sign in</a>");                            
+                            out.println("<a class=nav-link href=\"login.jsp\" name=\"signin\">Sign in</a>");                            
                         }
                         else {                            
-                            out.println("<a class=nav-link href=\"#\" name=\"signout\">Sign out</a>"); 
+                            out.println("<a class=nav-link href=\"/Logout\" name=\"signout\">Sign out</a>"); 
                         }
                     %>
                 </li>

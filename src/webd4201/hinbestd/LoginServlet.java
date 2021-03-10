@@ -24,14 +24,14 @@ public class LoginServlet extends HttpServlet {
         try {
             Connection c = DatabaseConnect.initialize();
             Student.initialize(c);
-            long id = 0;
+            Long id = null;
             String password = new String();
             
             try {
                 id = Long.parseLong(request.getParameter("ID"));
                 password = request.getParameter("Password");
+                System.out.println("ID = " + id + " Password = " + password);
                 Student aStudent = Student.authenticate(id, password);
-                
                 session.setAttribute("student", aStudent);
                 session.setAttribute("errors", "");
                 
@@ -45,13 +45,19 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("ID", id);
                     session.setAttribute("Password", password);
                 } else {
-                    errorBuffer.append("Invalid login id/password.</strong>");
                     session.setAttribute("ID", "");
                     session.setAttribute("Password", "");
                 }
                 session.setAttribute("errors", errorBuffer.toString());
                 response.sendRedirect("./login.jsp");
             }
+        } catch (NumberFormatException e) {
+            StringBuffer errorBuffer = new StringBuffer();
+            errorBuffer.append("<strong>Your login information is incorrect.<br/>");
+            errorBuffer.append("Please try again</strong>");
+            
+            session.setAttribute("errors", errorBuffer.toString());
+            response.sendRedirect("./login.jsp");
         } catch (Exception e) {
             System.out.println(e);
             String line1="<h2>A network error has occurred!</h2>";
