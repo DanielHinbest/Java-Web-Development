@@ -3,6 +3,12 @@
 %>
 <%@ include file="./header.jsp" %>
 <% 
+    if (loggedInStudent != null) {
+        session.setAttribute("message", "You must be signed in to access that page");
+        response.sendRedirect("./dashboard.jsp");
+        return;
+    }
+    
     String errorMessage = (String)session.getAttribute("errors");
     String message = (String)session.getAttribute("message");
     String id = (String)session.getAttribute("ID");

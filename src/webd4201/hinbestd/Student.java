@@ -271,21 +271,22 @@ public class Student extends User {
     }
     
     /**
-     * 
-     * @param id
-     * @param password
-     * @return
-     * @throws NotFoundException 
+     * Authenticates the user from the database if the id/password combination exists
+     * @param id The student ID
+     * @param password the student's password
+     * @return The student details
+     * @throws NotFoundException thrown when a student does not exist
+     * @throws java.security.NoSuchAlgorithmException thrown when an algorithm doesn't exist
      */
-    public static Student authenticate(long id, String password) throws NotFoundException {
+    public static Student authenticate(long id, String password) throws NotFoundException, NoSuchAlgorithmException {
         return StudentDA.authenticate(id, password);
     }
     
     /**
-     * 
-     * @param id
-     * @param password
-     * @return 
+     * Checks if the user is currently logged in
+     * @param id The user ID
+     * @param password The user password
+     * @return return true of the login exists
      */
     public static boolean isExistingLogin(long id, String password) {
         return StudentDA.isExistingLogin(id, password);

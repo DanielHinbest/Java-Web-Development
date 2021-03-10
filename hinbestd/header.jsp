@@ -28,7 +28,7 @@
                             out.println("<a class=nav-link href=\"login.jsp\" name=\"signin\">Sign in</a>");                            
                         }
                         else {                            
-                            out.println("<a class=nav-link href=\"/Logout\" name=\"signout\">Sign out</a>"); 
+                            out.println("<a class=nav-link href=\"./Logout\" name=\"signout\">Sign out</a>"); 
                         }
                     %>
                 </li>

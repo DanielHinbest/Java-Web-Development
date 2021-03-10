@@ -9,8 +9,8 @@ import webd4201.hinbestd.Exceptions.*;
 /**
  * This class performs the processes to log in a user
  * @author Daniel
- * @version 1.0
- * @since 3.0 (March 4, 2021)
+ * @version 1.0 (March 4, 2021)
+ * @since 3.0 
  */
 public class LoginServlet extends HttpServlet {
     /**
@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
             try {
                 id = Long.parseLong(request.getParameter("ID"));
                 password = request.getParameter("Password");
-                System.out.println("ID = " + id + " Password = " + password);
+//                System.out.println("ID = " + id + " Password = " + password);
                 Student aStudent = Student.authenticate(id, password);
                 session.setAttribute("student", aStudent);
                 session.setAttribute("errors", "");
@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
     }
     
     /**
-     * Processes when the page first loads, calls doPost
+     * Processes when the page first loads and performs the post functionality
      * @param request The server's request
      * @param response The server's response
      * @throws IOException Thrown when input or output fail
@@ -78,7 +78,7 @@ public class LoginServlet extends HttpServlet {
     }
     
     /**
-     * Generates the error page
+     * Generates the error page formatting
      * @param first The first line of the output
      * @param second The second line of the output
      * @param response The servlet response

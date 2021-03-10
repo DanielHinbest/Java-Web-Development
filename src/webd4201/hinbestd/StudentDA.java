@@ -14,7 +14,7 @@ import webd4201.hinbestd.Exceptions.NotFoundException;
  * sense)
  *
  * @author Daniel Hinbest
- * @version 2.0 (1 March 2021)
+ * @version 2.0 (3 March 2021)
  * @since 2.0
  */
 public class StudentDA {
@@ -368,6 +368,12 @@ public class StudentDA {
         return aStudent;
     }
     
+    /**
+     * Checks if the user is currently logged in
+     * @param id The user ID
+     * @param password The user password
+     * @return return true of the login exists
+     */
     public static boolean isExistingLogin(long id, String password) {
         
         boolean exists = true;
