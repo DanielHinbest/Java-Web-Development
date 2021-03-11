@@ -14,7 +14,7 @@ import webd4201.hinbestd.Exceptions.NotFoundException;
  * sense)
  *
  * @author Daniel Hinbest
- * @version 2.0 (1 March 2021)
+ * @version 2.0 (3 March 2021)
  * @since 2.0
  */
 public class StudentDA {
@@ -321,8 +321,9 @@ public class StudentDA {
      * @param password the student's password
      * @return The student details
      * @throws NotFoundException thrown when a student does not exist
+     * @throws java.security.NoSuchAlgorithmException thrown when an algorithm doesn't exist
      */
-    public static Student authenticate(long id, String password) throws NotFoundException {
+    public static Student authenticate(long id, String password) throws NotFoundException, NoSuchAlgorithmException {
         aStudent = null;
         
         try {
@@ -330,7 +331,7 @@ public class StudentDA {
                                                                             + "WHERE users.id = ? AND password = ?");
             
             psAuthenticate.setLong(1, id);
-            psAuthenticate.setString(2, password);
+            psAuthenticate.setString(2, User.hashPassword(password));
             
             ResultSet rs = psAuthenticate.executeQuery();
             
@@ -367,6 +368,12 @@ public class StudentDA {
         return aStudent;
     }
     
+    /**
+     * Checks if the user is currently logged in
+     * @param id The user ID
+     * @param password The user password
+     * @return return true of the login exists
+     */
     public static boolean isExistingLogin(long id, String password) {
         
         boolean exists = true;

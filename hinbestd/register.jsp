@@ -1,7 +1,19 @@
 <%
+    /*
+        Daniel Hinbest
+        WEBD 4201
+        March 11, 2021
+    */
     String title = "WEBD4201 - Register";
 %>
 <%@include file="./header.jsp" %>
+<%
+    if (loggedInStudent != null) {
+        session.setAttribute("message", "You must be signed in to access that page");
+        response.sendRedirect("./dashboard.jsp");
+        return;
+    }
+%>
 
 <!--<div class="form">
     <form class="form" method="post" action="">
