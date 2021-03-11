@@ -7,9 +7,10 @@ This project was developed in Apache NetBeans IDE 12.2 on JDK 15
 
 The hinbestd folder provides all the files for Tomcat
 
-The current deliverable is: Deliverable 3 - JSP Web Pages
+The next deliverable is: Deliverable #4 - Java/JDBC Transactions
 
 Completed deliverables are: <br>
 Deliverable #1 - Java/OOP Review <br>
 Deliverable #2 - JDBC/Web Security<br>
-Term Test #1 - Java/JDBC
+Term Test #1 - Java/JDBC<br>
+Deliverable 3 - JSP Web Pages
