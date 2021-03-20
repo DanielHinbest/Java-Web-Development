@@ -122,10 +122,9 @@ public class StudentDA {
         aStudent = null;
 
         try {
-            PreparedStatement psSelect = aConnection.prepareStatement("SELECT users.id, password, first_name, "
-                    + "last_name, email_address, last_access, enrol_date, enabled, type, "
+            PreparedStatement psSelect = aConnection.prepareStatement("SELECT id, "
                     + "program_code, program_description, year "
-                    + "FROM users, students WHERE users.id = students.id AND users.id = ?");
+                    + "FROM students WHERE students.id = ?");
 
             psSelect.setLong(1, key);
 
@@ -174,40 +173,23 @@ public class StudentDA {
     public static boolean create(Student aStudent) throws DuplicateException, NoSuchAlgorithmException {
         boolean inserted = false;
 
-        id = aStudent.getId();
-        password = aStudent.getPassword();
-        firstName = aStudent.getFirstName();
-        lastName = aStudent.getLastName();
-        emailAddress = aStudent.getEmailAddress();
-        lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.Date to java.sql.Date
-        enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
-        enabled = aStudent.isEnabled();
-        type = aStudent.getType();
-        programCode = aStudent.getProgramCode();
-        programDescription = aStudent.getProgramDescription();
-        year = aStudent.getYear();
-
         try {
-            retrieve(id);
-            throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
-        } catch (NotFoundException e) {
-            try {
+            aConnection.setAutoCommit(false);
 
-                PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, "
-                        + "first_name, last_name, email_address, last_access, enrol_date, enabled, type) "
-                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            id = aStudent.getId();
+//            password = aStudent.getPassword();
+//            firstName = aStudent.getFirstName();
+//            lastName = aStudent.getLastName();
+//            emailAddress = aStudent.getEmailAddress();
+//            lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.Date to java.sql.Date
+//            enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
+//            enabled = aStudent.isEnabled();
+//            type = aStudent.getType();
+            programCode = aStudent.getProgramCode();
+            programDescription = aStudent.getProgramDescription();
+            year = aStudent.getYear();
 
-                psUserInsert.setLong(1, id);
-                psUserInsert.setString(2, password);
-                psUserInsert.setString(3, firstName);
-                psUserInsert.setString(4, lastName);
-                psUserInsert.setString(5, emailAddress);
-                psUserInsert.setDate(6, lastAccess);
-                psUserInsert.setDate(7, enrolDate);
-                psUserInsert.setBoolean(8, enabled);
-                psUserInsert.setString(9, String.valueOf(type));
-                psUserInsert.execute();
-
+            if (UserDA.create(aStudent)) {
                 PreparedStatement psStudentInsert = aConnection.prepareStatement("INSERT INTO students "
                         + "(id, program_code, program_description, year) VALUES (?, ?, ?, ?)");
 
@@ -215,12 +197,49 @@ public class StudentDA {
                 psStudentInsert.setString(2, programCode);
                 psStudentInsert.setString(3, programDescription);
                 psStudentInsert.setInt(4, year);
-                psStudentInsert.execute();
-            } catch (SQLException ee) {
-                System.out.println(ee);
+                
+                if (psStudentInsert.executeUpdate() == 1) {
+                    inserted = true;
+                    aConnection.commit();
+                } else {
+                    aConnection.rollback();
+                }
+                aConnection.setAutoCommit(true);
             }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return inserted;
+//
+
+//
+//        try {
+//            retrieve(id);
+//            throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
+//        } catch (NotFoundException e) {
+//            try {
+//
+//                PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, "
+//                        + "first_name, last_name, email_address, last_access, enrol_date, enabled, type) "
+//                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+//
+//                psUserInsert.setLong(1, id);
+//                psUserInsert.setString(2, password);
+//                psUserInsert.setString(3, firstName);
+//                psUserInsert.setString(4, lastName);
+//                psUserInsert.setString(5, emailAddress);
+//                psUserInsert.setDate(6, lastAccess);
+//                psUserInsert.setDate(7, enrolDate);
+//                psUserInsert.setBoolean(8, enabled);
+//                psUserInsert.setString(9, String.valueOf(type));
+//                psUserInsert.execute();
+//
+//            } catch (SQLException ee) {
+//                System.out.println(ee);
+//            }
+//        }
+//        return inserted;
     }
 
     /**
@@ -236,16 +255,16 @@ public class StudentDA {
         id = aStudent.getId();
 
         try {
-            PreparedStatement psUserDelete = aConnection.prepareStatement("DELETE FROM users WHERE id = ?");
+//            PreparedStatement psUserDelete = aConnection.prepareStatement("DELETE FROM users WHERE id = ?");
             PreparedStatement psStudentDelete = aConnection.prepareStatement("DELETE FROM students WHERE id = ?");
 
-            psUserDelete.setLong(1, id);
+//            psUserDelete.setLong(1, id);
             psStudentDelete.setLong(1, id);
 
             Student.retrieve(id);
 
             records = psStudentDelete.executeUpdate();
-            records = psUserDelete.executeUpdate();
+//            records = psUserDelete.executeUpdate();
         } catch (NotFoundException e) {
             throw new NotFoundException("Student with ID " + id + " does not exist.");
         } catch (SQLException e) {
@@ -269,37 +288,37 @@ public class StudentDA {
 
         try {
 
-            PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
-                    + "first_name = ?, last_name = ?, email_address = ?, last_access = ?, enrol_date = ?, type = ?, enabled = ?"
-                    + "WHERE id = ?");
+//            PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
+//                    + "first_name = ?, last_name = ?, email_address = ?, last_access = ?, enrol_date = ?, type = ?, enabled = ?"
+//                    + "WHERE id = ?");
             PreparedStatement psStudentUpdate = aConnection.prepareStatement("UPDATE students SET program_code = ?, program_description = ?, year = ?"
                     + "WHERE id = ?");
-            
+
             Student.retrieve(id);
-            
+
             id = aStudent.getId();
-            password = aStudent.getPassword();
-            firstName = aStudent.getFirstName();
-            lastName = aStudent.getLastName();
-            emailAddress = aStudent.getEmailAddress();
-            lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.date to java.sql.Date
-            enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
-            enabled = aStudent.isEnabled();
-            type = aStudent.getType();
+//            password = aStudent.getPassword();
+//            firstName = aStudent.getFirstName();
+//            lastName = aStudent.getLastName();
+//            emailAddress = aStudent.getEmailAddress();
+//            lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.date to java.sql.Date
+//            enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
+//            enabled = aStudent.isEnabled();
+//            type = aStudent.getType();
             programCode = aStudent.getProgramCode();
             programDescription = aStudent.getProgramDescription();
             year = aStudent.getYear();
-            
-            psUserUpdate.setString(1, password);
-            psUserUpdate.setString(2, firstName);
-            psUserUpdate.setString(3, lastName);
-            psUserUpdate.setString(4, emailAddress);
-            psUserUpdate.setDate(5, lastAccess);
-            psUserUpdate.setDate(6, enrolDate);
-            psUserUpdate.setString(7, String.valueOf(type));    // Converts char to String
-            psUserUpdate.setBoolean(8, enabled);
-            psUserUpdate.setLong(9, id);
-            psUserUpdate.executeUpdate();
+
+//            psUserUpdate.setString(1, password);
+//            psUserUpdate.setString(2, firstName);
+//            psUserUpdate.setString(3, lastName);
+//            psUserUpdate.setString(4, emailAddress);
+//            psUserUpdate.setDate(5, lastAccess);
+//            psUserUpdate.setDate(6, enrolDate);
+//            psUserUpdate.setString(7, String.valueOf(type));    // Converts char to String
+//            psUserUpdate.setBoolean(8, enabled);
+//            psUserUpdate.setLong(9, id);
+//            psUserUpdate.executeUpdate();
 
             psStudentUpdate.setString(1, programCode);
             psStudentUpdate.setString(2, programDescription);
@@ -314,29 +333,32 @@ public class StudentDA {
         }
         return records;
     }
-    
+
     /**
-     * Authenticates the user from the database if the id/password combination exists
+     * Authenticates the user from the database if the id/password combination
+     * exists
+     *
      * @param id The student ID
      * @param password the student's password
      * @return The student details
      * @throws NotFoundException thrown when a student does not exist
-     * @throws java.security.NoSuchAlgorithmException thrown when an algorithm doesn't exist
+     * @throws java.security.NoSuchAlgorithmException thrown when an algorithm
+     * doesn't exist
      */
     public static Student authenticate(long id, String password) throws NotFoundException, NoSuchAlgorithmException {
         aStudent = null;
-        
+
         try {
             PreparedStatement psAuthenticate = aConnection.prepareStatement("SELECT * FROM users, students "
-                                                                            + "WHERE users.id = ? AND password = ?");
-            
+                    + "WHERE users.id = ? AND password = ?");
+
             psAuthenticate.setLong(1, id);
             psAuthenticate.setString(2, User.hashPassword(password));
-            
+
             ResultSet rs = psAuthenticate.executeQuery();
-            
+
             boolean gotIt = rs.next();
-            
+
             if (gotIt) {
                 id = rs.getLong("id");
                 password = rs.getString("password");
@@ -350,43 +372,44 @@ public class StudentDA {
                 programCode = rs.getString("program_code");
                 programDescription = rs.getString("program_description");
                 year = rs.getInt("year");
-                
+
                 try {
                     aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, enabled, type, programCode, programDescription, year);
-                    
+
                 } catch (InvalidUserDataException iude) {
                     System.out.println(iude.getMessage());
                 }
-                
+
             } else {
                 throw new NotFoundException("Not Found");
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
         return aStudent;
     }
-    
+
     /**
      * Checks if the user is currently logged in
+     *
      * @param id The user ID
      * @param password The user password
      * @return return true of the login exists
      */
     public static boolean isExistingLogin(long id, String password) {
-        
+
         boolean exists = true;
-        
+
         try {
             PreparedStatement psLogin = aConnection.prepareStatement("SELECT * FROM users, students "
-                                                                    + "WHERE users.id = ? AND users.password = ?");
-            
+                    + "WHERE users.id = ? AND users.password = ?");
+
             psLogin.setLong(1, id);
             psLogin.setString(2, password);
-            
+
             ResultSet rs = psLogin.executeQuery();
-            
+
             exists = rs.next();
         } catch (SQLException e) {
             System.out.println(e);

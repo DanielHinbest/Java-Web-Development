@@ -2,6 +2,7 @@ package webd4201.hinbestd;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -397,6 +398,57 @@ public class User implements CollegeInterface {
         md.update(thingToBeHashed.getBytes());
         byte[] bytesofHashedString = md.digest();
         return decToHex(bytesofHashedString);
+    }
+        
+    /**
+     * Initializes a database connection from the student data access
+     * @param c the variable to create a connection
+     */
+    public static void initialize(Connection c) {
+        UserDA.initialize(c);
+    }
+    
+    /**
+     * Selects a student record with the provided ID number
+     * @param id the ID number of the retrieved student record
+     * @return the result set of the selected student
+     * @throws NotFoundException thrown if no user with the set ID exists
+     */
+    public static User retrieve(long id) throws NotFoundException {
+        return UserDA.retrieve(id);
+    }
+    
+    /**
+     * Terminates the existing database connection
+     */
+    public static void terminate() {
+        UserDA.terminate();
+    }
+    
+    /**
+     * Inserts a new record into the database with the provided content
+     * @throws DuplicateException thrown when a record with the provided ID already exists
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
+     */
+    public void create() throws DuplicateException, NoSuchAlgorithmException {
+        UserDA.create(this);
+    }
+    
+    /**
+     * Deletes an existing record from the database
+     * @throws NotFoundException thrown when no record with the ID exists
+     */
+    public void delete() throws NotFoundException {
+        UserDA.delete(this);
+    }
+    
+    /**
+     * Updates an existing record with the provided student information
+     * @throws NotFoundException thrown when no record with the ID exists
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
+     */
+    public void update() throws NotFoundException, NoSuchAlgorithmException {
+        UserDA.update(this);
     }
 
 }
