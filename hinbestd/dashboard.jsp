@@ -16,7 +16,6 @@
 %>
 
 <h1 class="h2">Dashboard</h1>
-<!--<h2><?php echo $message;?></h2>-->
 
 </div>
 

@@ -17,6 +17,10 @@
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>webd4201.hinbestd.LogoutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>webd4201.hinbestd.RegisterServlet</servlet-class>
+    </servlet>
     
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -25,5 +29,9 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/Register</url-pattern>
     </servlet-mapping>
 </web-app>

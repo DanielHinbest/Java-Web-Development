@@ -45,9 +45,9 @@
 <form class="form-signin" method="post" action="./Login">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputId" class="sr-only">ID</label>
-    <input name="ID" type="text" id="inputId" class="form-control" placeholder="ID" value="<%= id.trim() %>" required autofocus>
+    <input name="ID" type="text" id="inputId" class="form-control" placeholder="ID" value="<%= id.trim() %>" required autofocus />
     <label for="inputPassword" class="sr-only">Password</label>
-    <input name="Password" type="password" id="inputPassword" class="form-control" placeholder="Password" value="<%= password %>" required>
+    <input name="Password" type="password" id="inputPassword" class="form-control" placeholder="Password" value="<%= password %>" required />
     <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
 </form>
 </div>

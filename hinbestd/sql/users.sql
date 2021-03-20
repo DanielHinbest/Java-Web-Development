@@ -26,10 +26,10 @@ CREATE TABLE users (
 -- Inserts records into the users table
 INSERT INTO users VALUES (
 	100717231,
-	ENCODE(DIGEST('pass1234', 'sha1'), 'hex'),
+	ENCODE(DIGEST('100717231', 'sha1'), 'hex'),
 	'Daniel',
 	'Hinbest',
-	'daniel.hinbest@rogers.com',
+	'daniel.hinbest@dcmail.ca',
 	true,
 	's',
 	NOW(),
@@ -52,7 +52,7 @@ INSERT INTO users VALUES (
 	100843928,
 	ENCODE(DIGEST('abcd1234', 'sha1'), 'hex'),
 	'Vladimir',
-	'Guerrero Jr.',
+	'Guerrero Jr',
 	'vladimir.guerrerojr@dcmail.ca',
 	true,
 	's',
