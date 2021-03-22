@@ -49,12 +49,18 @@ public class RegisterServlet extends HttpServlet {
                 response.sendRedirect("./dashboard.jsp");
             } catch (DuplicateException e) {
                 StringBuffer errorBuffer = new StringBuffer();
-                errorBuffer.append("<strong>A user with your details already exists");
-                errorBuffer.append("Please try again</strong>");                
+                errorBuffer.append("<strong>A user with your details already exists<br/>");
+                errorBuffer.append("Please try again</strong>");   
+                
+                session.setAttribute("errors", errorBuffer.toString());
+                response.sendRedirect("./register.jsp");            
             } catch (InvalidUserDataException e){
                 StringBuffer errorBuffer = new StringBuffer();
-                errorBuffer.append("<strong>Your registration details are invalid");
-                errorBuffer.append("Please try again</strong>");                
+                errorBuffer.append("<strong>Your registration details are invalid<br/>");
+                errorBuffer.append("Please try again</strong>");   
+                
+                session.setAttribute("errors", errorBuffer.toString());
+                response.sendRedirect("./register.jsp");
             }
             
         } catch (NumberFormatException e){
