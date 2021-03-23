@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.Date;
-import java.util.Objects;
 import javax.servlet.http.*;
 import webd4201.hinbestd.Exceptions.*;
+import static webd4201.hinbestd.Student.isExistingLogin;
 import static webd4201.hinbestd.User.isValidEmailAddress;
 
 /**
@@ -14,7 +14,7 @@ import static webd4201.hinbestd.User.isValidEmailAddress;
  *
  * @author Daniel Hinbest
  * @version 1.0 (April 1, 2021)
- * @since 4.0
+ * @since 4.0 
  */
 public class RegisterServlet extends HttpServlet {
 
@@ -51,16 +51,28 @@ public class RegisterServlet extends HttpServlet {
             programCode = request.getParameter("Program_Code").trim();
             programDescription = request.getParameter("Program_Description").trim();
             year = Integer.parseInt(request.getParameter("Year"));
+            
+            session.setAttribute("ID", String.valueOf(id));
+//            session.setAttribute("Password", password);
+            session.setAttribute("First_Name", firstName);
+            session.setAttribute("Last_Name", lastName);
+            session.setAttribute("Email_Address", emailAddress);
+            session.setAttribute("Program_Code", programCode);
+            session.setAttribute("Program_Description", programDescription);
+            session.setAttribute("Year", String.valueOf(year));
 
-            Student aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, true, 's', programCode, programDescription, year);
+            if (!isExistingLogin(id, password)){
+                Student aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, true, 's', programCode, programDescription, year);
 
-            aStudent.create();
-
-            session.setAttribute("student", aStudent);
-            session.setAttribute("errors", "");
-            session.setAttribute("message", "You are now registered in the database.");
-
-            response.sendRedirect("./dashboard.jsp");
+                aStudent.create();
+                session.setAttribute("student", aStudent);
+                session.setAttribute("errors", "");
+                session.setAttribute("message", "You are now registered in the database.");
+                response.sendRedirect("./dashboard.jsp");
+            
+            } else {
+                throw new DuplicateException("The user with the ID " + id + " already exists");
+            }         
 
         } catch (DuplicateException e) {
             StringBuffer errorBuffer = new StringBuffer();
@@ -77,83 +89,99 @@ public class RegisterServlet extends HttpServlet {
                         
             errorBuffer.append("<strong>Your registration details are invalid<br/>");
             
-            if (id == null) {
-                errorBuffer.append("The ID cannot be blank<br/>");
+            if (id == null || String.valueOf(id).equals("")) {
+                errorBuffer.append("The ID must be a number<br/>");
                 isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
+                session.setAttribute("ID", "");
             } else if (id < User.MINIMUM_ID_NUMBER || id > User.MAXIMUM_ID_NUMBER) {
                 errorBuffer.append("The ID must be between " + User.MINIMUM_ID_NUMBER + " and " + User.MAXIMUM_ID_NUMBER + "<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("ID", "");
             }
 
             if (password.length() < User.MINIMUM_PASSWORD_LENGTH) {
                 errorBuffer.append("The password must be at least " + User.MINIMUM_PASSWORD_LENGTH + " characters<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Password", "");
             } else if (password == null || password == "") {
                 errorBuffer.append("The password cannot be blank<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Password", "");
             }
 
             if (firstName.length() < 1 || firstName.length() > 35) {
                 errorBuffer.append("The first name must be between 1 and 35 characters<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("First_Name", "");
             } else if (firstName == null || firstName == "") {
                 errorBuffer.append("The first name cannot be blank<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("First_Name", "");
             }
 
             if (lastName.length() < 1 || lastName.length() > 50) {
                 errorBuffer.append("The last name must be between 1 and 50 characters<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Last_Name", "");
             } else if (lastName == null || lastName == "") {
                 errorBuffer.append("The first name cannot be blank<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Last_Name", "");
             }
 
             if (emailAddress == null || emailAddress == "") {
                 isValid = false;
                 errorBuffer.append("You must enter an email address<br/>");
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Email_Address", "");
             } else if (!isValidEmailAddress(emailAddress)) {
                 isValid = false;
                 errorBuffer.append(emailAddress + " is not a valid email address<br/>");
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Email_Address", "");
             }
 
             if (programCode.length() < 1 || programCode.length() > 4) {
                 errorBuffer.append("The program code must be between 1 and 4 characters<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Code", "");
             } else if (programCode == null || programCode == "") {
                 errorBuffer.append("The program code cannot be blank<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Code", "");
             }
 
             if (programDescription.length() < 1 || programDescription.length() > 70) {
                 errorBuffer.append("The program description must be between 1 and 70 characters<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Description", "");
             } else if (programDescription == null || programDescription == "") {
                 errorBuffer.append("The program description cannot be blank<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Description", "");
             }
                        
-            if (year == null) {
+            if (year == null || String.valueOf(year).equals("")) {
                 errorBuffer.append("The year of study cannot be blank<br/>");
                 isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
+                session.setAttribute("Year", "");
             } else if (year < 1 || year > 4) {
                 errorBuffer.append("The year of study must be between 1 and 4 years<br/>");
                 isValid = false;
+                session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Year", "");
             } 
             

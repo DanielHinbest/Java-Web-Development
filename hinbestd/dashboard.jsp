@@ -20,9 +20,9 @@
         message = "";
 %>
 
-<p><% out.println(message); %></p>
-</div>
 <h1 class="h2">Dashboard</h1>
+</div>
+<p><% out.println(message); %></p>
 <h4>
     Hello, <% out.print(loggedInStudent.getFirstName() + " " + loggedInStudent.getLastName()); %>. This is your dashboard to the Durham College Mark Database.
 </h4>
