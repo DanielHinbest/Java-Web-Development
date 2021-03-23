@@ -3,8 +3,6 @@ package webd4201.hinbestd;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import webd4201.hinbestd.Exceptions.DuplicateException;
 import webd4201.hinbestd.Exceptions.InvalidUserDataException;
 import webd4201.hinbestd.Exceptions.NotFoundException;

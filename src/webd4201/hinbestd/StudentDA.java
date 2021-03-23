@@ -174,9 +174,13 @@ public class StudentDA {
         boolean inserted = false;
 
         try {
-            aConnection.setAutoCommit(false);
+            retrieve(id);
+            throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
+        } catch (NotFoundException e) {
+            try {
+                aConnection.setAutoCommit(false);
 
-            id = aStudent.getId();
+                id = aStudent.getId();
 //            password = aStudent.getPassword();
 //            firstName = aStudent.getFirstName();
 //            lastName = aStudent.getLastName();
@@ -185,61 +189,33 @@ public class StudentDA {
 //            enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
 //            enabled = aStudent.isEnabled();
 //            type = aStudent.getType();
-            programCode = aStudent.getProgramCode();
-            programDescription = aStudent.getProgramDescription();
-            year = aStudent.getYear();
+                programCode = aStudent.getProgramCode();
+                programDescription = aStudent.getProgramDescription();
+                year = aStudent.getYear();
 
-            if (UserDA.create(aStudent)) {
-                PreparedStatement psStudentInsert = aConnection.prepareStatement("INSERT INTO students "
-                        + "(id, program_code, program_description, year) VALUES (?, ?, ?, ?)");
+                if (UserDA.create(aStudent)) {
+                    PreparedStatement psStudentInsert = aConnection.prepareStatement("INSERT INTO students "
+                            + "(id, program_code, program_description, year) VALUES (?, ?, ?, ?)");
 
-                psStudentInsert.setLong(1, id);
-                psStudentInsert.setString(2, programCode);
-                psStudentInsert.setString(3, programDescription);
-                psStudentInsert.setInt(4, year);
-                
-                if (psStudentInsert.executeUpdate() == 1) {
-                    inserted = true;
-                    aConnection.commit();
-                } else {
-                    aConnection.rollback();
+                    psStudentInsert.setLong(1, id);
+                    psStudentInsert.setString(2, programCode);
+                    psStudentInsert.setString(3, programDescription);
+                    psStudentInsert.setInt(4, year);
+
+                    if (psStudentInsert.executeUpdate() == 1) {
+                        inserted = true;
+                        aConnection.commit();
+                    } else {
+                        aConnection.rollback();
+                    }
+                    aConnection.setAutoCommit(true);
                 }
-                aConnection.setAutoCommit(true);
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
             }
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return inserted;
-//
-
-//
-//        try {
-//            retrieve(id);
-//            throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
-//        } catch (NotFoundException e) {
-//            try {
-//
-//                PreparedStatement psUserInsert = aConnection.prepareStatement("INSERT INTO users (id, password, "
-//                        + "first_name, last_name, email_address, last_access, enrol_date, enabled, type) "
-//                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//
-//                psUserInsert.setLong(1, id);
-//                psUserInsert.setString(2, password);
-//                psUserInsert.setString(3, firstName);
-//                psUserInsert.setString(4, lastName);
-//                psUserInsert.setString(5, emailAddress);
-//                psUserInsert.setDate(6, lastAccess);
-//                psUserInsert.setDate(7, enrolDate);
-//                psUserInsert.setBoolean(8, enabled);
-//                psUserInsert.setString(9, String.valueOf(type));
-//                psUserInsert.execute();
-//
-//            } catch (SQLException ee) {
-//                System.out.println(ee);
-//            }
-//        }
-//        return inserted;
     }
 
     /**
@@ -319,7 +295,6 @@ public class StudentDA {
 //            psUserUpdate.setBoolean(8, enabled);
 //            psUserUpdate.setLong(9, id);
 //            psUserUpdate.executeUpdate();
-
             psStudentUpdate.setString(1, programCode);
             psStudentUpdate.setString(2, programDescription);
             psStudentUpdate.setInt(3, year);

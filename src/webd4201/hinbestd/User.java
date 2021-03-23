@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import webd4201.hinbestd.Exceptions.*;
 
 /**
@@ -113,7 +115,8 @@ public class User implements CollegeInterface {
      * @param enrolDate The date the user enrolled
      * @param enabled Sets the user's accessibility
      * @param type The user type (Student or Faculty)
-     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when user data is invalid
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when
+     * user data is invalid
      */
     public User(long id, String password, String firstName, String lastName, String emailAddress,
             Date lastAccess, Date enrolDate, boolean enabled, char type) throws InvalidUserDataException {
@@ -136,7 +139,8 @@ public class User implements CollegeInterface {
      * Default constructor - creates a new instance of the User class with the
      * default values from the constants
      *
-     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when user data is invalid
+     * @throws webd4201.hinbestd.Exceptions.InvalidUserDataException thrown when
+     * user data is invalid
      */
     public User() throws InvalidUserDataException {
         this(DEFAULT_ID, DEFAULT_PASSWORD, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL_ADDRESS, new Date(), new Date(), DEFAULT_ENABLED_STATUS, DEFAULT_TYPE);
@@ -155,7 +159,8 @@ public class User implements CollegeInterface {
      * Sets the user ID
      *
      * @param id The user's ID number
-     * @throws webd4201.hinbestd.Exceptions.InvalidIdException thrown when an ID is invalid
+     * @throws webd4201.hinbestd.Exceptions.InvalidIdException thrown when an ID
+     * is invalid
      */
     public final void setId(long id) throws InvalidIdException {
         if (verifyID(id)) {
@@ -178,8 +183,10 @@ public class User implements CollegeInterface {
      * Sets the user's password
      *
      * @param password the user's password input
-     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException thrown when a password is invalid
-     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
+     * @throws webd4201.hinbestd.Exceptions.InvalidPasswordException thrown when
+     * a password is invalid
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing
+     * algorithm doesn't exist
      */
     public final void setPassword(String password) throws InvalidPasswordException, NoSuchAlgorithmException {
         if (password.length() >= MINIMUM_PASSWORD_LENGTH && password.length() <= MAXIMUM_PASSWORD_LENGTH) {
@@ -202,7 +209,8 @@ public class User implements CollegeInterface {
      * Sets the user's first name
      *
      * @param firstName the user's first name
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException thrown when a name is invalid
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException thrown when a
+     * name is invalid
      */
     public final void setFirstName(String firstName) throws InvalidNameException {
         if (firstName.length() != 0) {  //firstName.equals("")
@@ -225,7 +233,8 @@ public class User implements CollegeInterface {
      * Sets the user's last name
      *
      * @param lastName the user's last name
-     * @throws webd4201.hinbestd.Exceptions.InvalidNameException thrown when a name is invalid
+     * @throws webd4201.hinbestd.Exceptions.InvalidNameException thrown when a
+     * name is invalid
      */
     public final void setLastName(String lastName) throws InvalidNameException {
         if (lastName.length() != 0) {
@@ -250,7 +259,9 @@ public class User implements CollegeInterface {
      * @param emailAddress the user's email address
      */
     public final void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+        if (isValidEmailAddress(emailAddress)){
+            this.emailAddress = emailAddress;
+        }
     }
 
     /**
@@ -372,6 +383,7 @@ public class User implements CollegeInterface {
 
     /**
      * Converts the hashed string to a hexadecimal value
+     *
      * @param bytes the bytes to be converted
      * @return the hex string of the bytes
      */
@@ -386,9 +398,10 @@ public class User implements CollegeInterface {
         hex = sb.toString();
         return hex;
     }
-    
+
     /**
      * Hashes the password into SHA1
+     *
      * @param thingToBeHashed the value that is being hashed
      * @return the hashed string
      * @throws NoSuchAlgorithmException if a hashing algorithm doesn't exist
@@ -399,17 +412,19 @@ public class User implements CollegeInterface {
         byte[] bytesofHashedString = md.digest();
         return decToHex(bytesofHashedString);
     }
-        
+
     /**
      * Initializes a database connection from the student data access
+     *
      * @param c the variable to create a connection
      */
     public static void initialize(Connection c) {
         UserDA.initialize(c);
     }
-    
+
     /**
      * Selects a student record with the provided ID number
+     *
      * @param id the ID number of the retrieved student record
      * @return the result set of the selected student
      * @throws NotFoundException thrown if no user with the set ID exists
@@ -417,38 +432,55 @@ public class User implements CollegeInterface {
     public static User retrieve(long id) throws NotFoundException {
         return UserDA.retrieve(id);
     }
-    
+
     /**
      * Terminates the existing database connection
      */
     public static void terminate() {
         UserDA.terminate();
     }
-    
+
     /**
      * Inserts a new record into the database with the provided content
-     * @throws DuplicateException thrown when a record with the provided ID already exists
-     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
+     *
+     * @throws DuplicateException thrown when a record with the provided ID
+     * already exists
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing
+     * algorithm doesn't exist
      */
     public void create() throws DuplicateException, NoSuchAlgorithmException {
         UserDA.create(this);
     }
-    
+
     /**
      * Deletes an existing record from the database
+     *
      * @throws NotFoundException thrown when no record with the ID exists
      */
     public void delete() throws NotFoundException {
         UserDA.delete(this);
     }
-    
+
     /**
      * Updates an existing record with the provided student information
+     *
      * @throws NotFoundException thrown when no record with the ID exists
-     * @throws java.security.NoSuchAlgorithmException thrown when a hashing algorithm doesn't exist
+     * @throws java.security.NoSuchAlgorithmException thrown when a hashing
+     * algorithm doesn't exist
      */
     public void update() throws NotFoundException, NoSuchAlgorithmException {
         UserDA.update(this);
+    }
+
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddress = new InternetAddress(email);
+            emailAddress.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 
 }
