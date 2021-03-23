@@ -9,12 +9,12 @@ import webd4201.hinbestd.Exceptions.NotFoundException;
 
 /**
  * StudentDA - this file is contains all of the data access methods, that
- * actually get/set data to the database. Note: that all the methods are static
- * this is because you do not really create StudentDA objects (does not make
- * sense)
+ * actually get/set data to the database.
+ * Updated April 1 to use database transactions. All user-specific data now in 
+ * UserDA.
  *
  * @author Daniel Hinbest
- * @version 2.0 (3 March 2021)
+ * @version 3.0 (1 April 2021)
  * @since 2.0
  */
 public class StudentDA {
@@ -161,7 +161,8 @@ public class StudentDA {
     }
 
     /**
-     * Creates a new student record into the database
+     * Creates a new student record into the database once input for UserDA
+     * is successful.
      *
      * @param aStudent the student object to be added to the database
      * @return a boolean value to verify if the user was added successfully
@@ -181,14 +182,6 @@ public class StudentDA {
                 aConnection.setAutoCommit(false);
 
                 id = aStudent.getId();
-//            password = aStudent.getPassword();
-//            firstName = aStudent.getFirstName();
-//            lastName = aStudent.getLastName();
-//            emailAddress = aStudent.getEmailAddress();
-//            lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.Date to java.sql.Date
-//            enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
-//            enabled = aStudent.isEnabled();
-//            type = aStudent.getType();
                 programCode = aStudent.getProgramCode();
                 programDescription = aStudent.getProgramDescription();
                 year = aStudent.getYear();
@@ -231,16 +224,13 @@ public class StudentDA {
         id = aStudent.getId();
 
         try {
-//            PreparedStatement psUserDelete = aConnection.prepareStatement("DELETE FROM users WHERE id = ?");
             PreparedStatement psStudentDelete = aConnection.prepareStatement("DELETE FROM students WHERE id = ?");
 
-//            psUserDelete.setLong(1, id);
             psStudentDelete.setLong(1, id);
 
             Student.retrieve(id);
 
             records = psStudentDelete.executeUpdate();
-//            records = psUserDelete.executeUpdate();
         } catch (NotFoundException e) {
             throw new NotFoundException("Student with ID " + id + " does not exist.");
         } catch (SQLException e) {
@@ -263,38 +253,16 @@ public class StudentDA {
         int records = 0;
 
         try {
-
-//            PreparedStatement psUserUpdate = aConnection.prepareStatement("UPDATE users SET password = ?, "
-//                    + "first_name = ?, last_name = ?, email_address = ?, last_access = ?, enrol_date = ?, type = ?, enabled = ?"
-//                    + "WHERE id = ?");
             PreparedStatement psStudentUpdate = aConnection.prepareStatement("UPDATE students SET program_code = ?, program_description = ?, year = ?"
                     + "WHERE id = ?");
 
             Student.retrieve(id);
 
             id = aStudent.getId();
-//            password = aStudent.getPassword();
-//            firstName = aStudent.getFirstName();
-//            lastName = aStudent.getLastName();
-//            emailAddress = aStudent.getEmailAddress();
-//            lastAccess = new Date(aStudent.getLastAccess().getTime());  // Converts java.util.date to java.sql.Date
-//            enrolDate = new Date(aStudent.getEnrolDate().getTime());    // Converts java.util.date to java.sql.Date
-//            enabled = aStudent.isEnabled();
-//            type = aStudent.getType();
             programCode = aStudent.getProgramCode();
             programDescription = aStudent.getProgramDescription();
             year = aStudent.getYear();
 
-//            psUserUpdate.setString(1, password);
-//            psUserUpdate.setString(2, firstName);
-//            psUserUpdate.setString(3, lastName);
-//            psUserUpdate.setString(4, emailAddress);
-//            psUserUpdate.setDate(5, lastAccess);
-//            psUserUpdate.setDate(6, enrolDate);
-//            psUserUpdate.setString(7, String.valueOf(type));    // Converts char to String
-//            psUserUpdate.setBoolean(8, enabled);
-//            psUserUpdate.setLong(9, id);
-//            psUserUpdate.executeUpdate();
             psStudentUpdate.setString(1, programCode);
             psStudentUpdate.setString(2, programDescription);
             psStudentUpdate.setInt(3, year);

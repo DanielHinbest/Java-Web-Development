@@ -15,7 +15,7 @@ import webd4201.hinbestd.Exceptions.*;
  * super class for different types of users (Faculty, Students)
  *
  * @author Daniel Hinbest
- * @version 2.0 (2021-02-04)
+ * @version 3.0 (2021-04-01)
  * @since 1.0
  */
 public class User implements CollegeInterface {
@@ -472,6 +472,11 @@ public class User implements CollegeInterface {
         UserDA.update(this);
     }
 
+    /**
+     * Checks for if the email entered is valid
+     * @param email the email address for validation
+     * @return true if valid, false if invalid
+     */
     public static boolean isValidEmailAddress(String email) {
         boolean result = true;
         try {

@@ -8,8 +8,11 @@ import webd4201.hinbestd.Exceptions.InvalidUserDataException;
 import webd4201.hinbestd.Exceptions.NotFoundException;
 
 /**
- *
- * @author Daniel
+ * UserDA - This class uses database transactions to handle the user-specific data
+ * in the database *
+ * @author Daniel Hinbest
+ * @version 1.0 (1 April 2021)
+ * @since 4.0
  */
 public class UserDA {
 
@@ -27,44 +30,44 @@ public class UserDA {
      */
     static Statement aStatement;
     /**
-     * Student data attribute
+     * User data attribute
      */
     static User aUser;
 
     /**
-     * The student ID number
+     * The user ID number
      */
     static long id;
     /**
-     * The student's password
+     * The user's password
      */
     static String password;
     /**
-     * The student's first name
+     * The user's first name
      */
     static String firstName;
     /**
-     * The student's last name
+     * The user's last name
      */
     static String lastName;
     /**
-     * The student's email address
+     * The user's email address
      */
     static String emailAddress;
     /**
-     * The date the student last accessed the system
+     * The date the user last accessed the system
      */
     static Date lastAccess;
     /**
-     * The date the student enrolled
+     * The date the user enrolled
      */
     static Date enrolDate;
     /**
-     * Checks if the student has access to the system
+     * Checks if the user has access to the system
      */
     static boolean enabled;
     /**
-     * Checks the student's user type (All students are 's')
+     * Checks the user's user type (All students are 's', all faculty are 'f')
      */
     static char type;
 
@@ -96,8 +99,8 @@ public class UserDA {
     /**
      * Retrieves the database records based on the ID number provided
      *
-     * @param key the ID number of the student
-     * @return a student with the ID passed
+     * @param key the ID number of the user
+     * @return a user with the ID passed
      * @throws NotFoundException thrown if there is no user with the ID provided
      */
     public static User retrieve(long key) throws NotFoundException {
@@ -140,9 +143,9 @@ public class UserDA {
     }
 
     /**
-     * Creates a new student record into the database
+     * Creates a new user record into the database
      *
-     * @param aUser the student object to be added to the database
+     * @param aUser the user object to be added to the database
      * @return a boolean value to verify if the user was added successfully
      * @throws DuplicateException thrown if a user with the same ID exists
      * already
@@ -186,6 +189,13 @@ public class UserDA {
         return inserted;
     }
 
+    /**
+     * Removes a user from the database
+     *
+     * @param aUser the user that is being removed
+     * @return the number of existing records in the database
+     * @throws NotFoundException thrown if the user to be deleted was not found
+     */
     public static int delete(User aUser) throws NotFoundException {
         int records = 0;
 
@@ -201,7 +211,7 @@ public class UserDA {
             records = psUserDelete.executeUpdate();
 
         } catch (NotFoundException e) {
-            throw new NotFoundException("Student with ID " + id + " does not exist.");
+            throw new NotFoundException("User with ID " + id + " does not exist.");
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -243,7 +253,7 @@ public class UserDA {
         } catch (SQLException e) {
             System.out.println(e);
         } catch (NotFoundException e) {
-            throw new NotFoundException("Student with ID " + id + " does not exist.");            
+            throw new NotFoundException("User with ID " + id + " does not exist.");            
         }
         return records;
     }
