@@ -58,6 +58,7 @@ public class RegisterServlet extends HttpServlet {
 
                 session.setAttribute("student", aStudent);
                 session.setAttribute("errors", "");
+                session.setAttribute("message", "You are now registered in the database.");
 
                 response.sendRedirect("./dashboard.jsp");
             } catch (DuplicateException e) {
