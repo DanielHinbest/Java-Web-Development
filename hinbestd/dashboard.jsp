@@ -13,12 +13,16 @@
         response.sendRedirect("./login.jsp");
         return;
     }
+    
+    String message = (String)session.getAttribute("message");
+    
+    if (message == null)
+        message = "";
 %>
 
-<h1 class="h2">Dashboard</h1>
-
+<p><% out.println(message); %></p>
 </div>
-
+<h1 class="h2">Dashboard</h1>
 <h4>
     Hello, <% out.print(loggedInStudent.getFirstName() + " " + loggedInStudent.getLastName()); %>. This is your dashboard to the Durham College Mark Database.
 </h4>

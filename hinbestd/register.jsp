@@ -15,7 +15,7 @@
     }
     
     String errorMessage = (String)session.getAttribute("errors");
-    String message = (String)session.getAttribute("message");     // Not sure if I really need this line
+    String message = (String)session.getAttribute("message");
     String id = (String)session.getAttribute("ID");
     String password = (String)session.getAttribute("Password");
     String firstName = (String)session.getAttribute("First_Name");
@@ -29,6 +29,11 @@
         errorMessage = "";
     else
         session.removeAttribute("errors");
+        
+    if (message == null)
+        message = "";
+    else
+        session.removeAttribute("message");
     
     if (id == null)
         id = "";
@@ -53,6 +58,7 @@
             out.println(errorMessage);
         %>
     </p>
+    <p><% out.println(message); %></p>
 <form class="form-signin" method="post" action="./Register">
     <h1 class="h3 mb-3 font-weight-normal">Register</h1>
     <label for="inputId" class="sr-only">ID</label>
