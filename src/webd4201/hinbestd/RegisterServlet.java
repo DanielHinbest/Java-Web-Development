@@ -69,6 +69,14 @@ public class RegisterServlet extends HttpServlet {
                 session.setAttribute("errors", "");
                 session.setAttribute("message", "You are now registered in the database.");
                 response.sendRedirect("./dashboard.jsp");
+                session.removeAttribute("ID");
+                session.removeAttribute("First_Name");
+                session.removeAttribute("Last_Name");
+                session.removeAttribute("Email_Address");
+                session.removeAttribute("Program_Code");
+                session.removeAttribute("Program_Description");
+                session.removeAttribute("Year");
+                session.removeAttribute("errors");
             
             } else {
                 throw new DuplicateException("The user with the ID " + id + " already exists");
@@ -76,74 +84,61 @@ public class RegisterServlet extends HttpServlet {
 
         } catch (DuplicateException e) {
             StringBuffer errorBuffer = new StringBuffer();
-            boolean isValid = true;
-            errorBuffer.append("<strong>A user with your details already exists<br/>");
+            errorBuffer.append("<strong>A user with your ID already exists<br/>");
             errorBuffer.append("Please try again</strong>");
 
             session.setAttribute("errors", errorBuffer.toString());
             response.sendRedirect("./register.jsp");
         } catch (NumberFormatException | InvalidUserDataException e) {
             StringBuffer errorBuffer = new StringBuffer();
-            boolean isValid = true;
             errorBuffer = new StringBuffer();          
                         
             errorBuffer.append("<strong>Your registration details are invalid<br/>");
             
             if (id == null || String.valueOf(id).equals("")) {
                 errorBuffer.append("The ID must be a number<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("ID", "");
             } else if (id < User.MINIMUM_ID_NUMBER || id > User.MAXIMUM_ID_NUMBER) {
                 errorBuffer.append("The ID must be between " + User.MINIMUM_ID_NUMBER + " and " + User.MAXIMUM_ID_NUMBER + "<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("ID", "");
             }
 
             if (password.length() < User.MINIMUM_PASSWORD_LENGTH) {
                 errorBuffer.append("The password must be at least " + User.MINIMUM_PASSWORD_LENGTH + " characters<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Password", "");
             } else if (password == null || password == "") {
                 errorBuffer.append("The password cannot be blank<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
-                session.setAttribute("Password", "");
             }
 
             if (firstName.length() < 1 || firstName.length() > 35) {
                 errorBuffer.append("The first name must be between 1 and 35 characters<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("First_Name", "");
             } else if (firstName == null || firstName == "") {
                 errorBuffer.append("The first name cannot be blank<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("First_Name", "");
             }
 
             if (lastName.length() < 1 || lastName.length() > 50) {
                 errorBuffer.append("The last name must be between 1 and 50 characters<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Last_Name", "");
             } else if (lastName == null || lastName == "") {
                 errorBuffer.append("The first name cannot be blank<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Last_Name", "");
             }
 
             if (emailAddress == null || emailAddress == "") {
-                isValid = false;
                 errorBuffer.append("You must enter an email address<br/>");
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Email_Address", "");
             } else if (!isValidEmailAddress(emailAddress)) {
-                isValid = false;
                 errorBuffer.append(emailAddress + " is not a valid email address<br/>");
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Email_Address", "");
@@ -151,36 +146,30 @@ public class RegisterServlet extends HttpServlet {
 
             if (programCode.length() < 1 || programCode.length() > 4) {
                 errorBuffer.append("The program code must be between 1 and 4 characters<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Code", "");
             } else if (programCode == null || programCode == "") {
                 errorBuffer.append("The program code cannot be blank<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Code", "");
             }
 
             if (programDescription.length() < 1 || programDescription.length() > 70) {
                 errorBuffer.append("The program description must be between 1 and 70 characters<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Description", "");
             } else if (programDescription == null || programDescription == "") {
                 errorBuffer.append("The program description cannot be blank<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Program_Description", "");
             }
                        
             if (year == null || String.valueOf(year).equals("")) {
                 errorBuffer.append("The year of study cannot be blank<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Year", "");
             } else if (year < 1 || year > 4) {
                 errorBuffer.append("The year of study must be between 1 and 4 years<br/>");
-                isValid = false;
                 session.setAttribute("errors", errorBuffer.toString());
                 session.setAttribute("Year", "");
             } 
