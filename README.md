@@ -13,5 +13,5 @@ Completed deliverables are: <br>
 Deliverable #1 - Java/OOP Review <br>
 Deliverable #2 - JDBC/Web Security<br>
 Term Test #1 - Java/JDBC<br>
-Deliverable 3 - JSP Web Pages<br>
+Deliverable #3 - JSP Web Pages<br>
 Deliverable #4 - Java/JDBC Transactions/Data Validation
