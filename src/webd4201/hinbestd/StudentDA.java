@@ -175,7 +175,7 @@ public class StudentDA {
         boolean inserted = false;
 
         try {
-            retrieve(id);
+            retrieve(aStudent.getId());
             throw new DuplicateException("Failed to create Student record. Student ID " + id + " already exists.");
         } catch (NotFoundException e) {
             try {

@@ -44,10 +44,14 @@
             <div class="sidebar-sticky">
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.jsp">
-                        <span data-feather="file"></span>
-                        Dashboard
-                    </a> 
+                    <% 
+                        if (loggedInStudent != null) {
+                            out.println("<a class=\"nav-link\" href=\"dashboard.jsp\">"
+                                        + "<span data-feather=\"file\"></span>"
+                                        + "Dashboard"
+                                        + "</a>");
+                        }
+                    %>
                 </li>
                 <li class="nav-item">
                     <% 

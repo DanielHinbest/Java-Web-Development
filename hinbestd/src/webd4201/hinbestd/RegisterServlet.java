@@ -59,7 +59,8 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("Program_Code", programCode);
             session.setAttribute("Program_Description", programDescription);
             session.setAttribute("Year", String.valueOf(year));
-            
+            System.out.println(id);
+            System.out.println("Is Existing Login");
             if (!isExistingLogin(id, password)){
                 Student aStudent = new Student(id, password, firstName, lastName, emailAddress, lastAccess, enrolDate, true, 's', programCode, programDescription, year);
 
@@ -85,8 +86,6 @@ public class RegisterServlet extends HttpServlet {
             StringBuffer errorBuffer = new StringBuffer();
             errorBuffer.append("<strong>A user with your ID already exists<br/>");
             errorBuffer.append("Please try again</strong>");
-            
-            session.setAttribute("ID", "");
 
             session.setAttribute("errors", errorBuffer.toString());
             response.sendRedirect("./register.jsp");
