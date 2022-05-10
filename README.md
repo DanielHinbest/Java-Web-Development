@@ -5,13 +5,4 @@ The concept for this project is to develop a college database system where stude
 
 This project was developed in Apache NetBeans IDE 12.2 on JDK 15
 
-The hinbestd folder provides all the files for Tomcat
-
-The current deliverable is: Deliverable #5 - Serialization & Enterprise Java Beans
-
-Completed deliverables are: <br>
-Deliverable #1 - Java/OOP Review <br>
-Deliverable #2 - JDBC/Web Security<br>
-Term Test #1 - Java/JDBC<br>
-Deliverable #3 - JSP Web Pages<br>
-Deliverable #4 - Java/JDBC Transactions/Data Validation
+The hinbestd folder provides all the files for Tomcat to be placed in the webapp folder
